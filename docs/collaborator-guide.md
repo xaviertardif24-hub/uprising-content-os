@@ -29,20 +29,34 @@ For AI assistants working on this project:
 - **Code Access**: AI should primarily focus on the `frontend/` directory.
 - **Backend Protection**: Do not modify `backend/` logic unless explicitly requested and coordinated with Kael Belceus.
 
-## Setting Up Locally
+## Environment Management
 
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
+Both `frontend/` and `backend/` use environment variables. 
+1. Copy `.env.example` to `.env` in each directory.
+2. Fill in the required keys (OpenAI Keys, Database URLs, etc.).
+3. **Frontend API URL**: In `frontend/.env`, set `VITE_API_URL` to your local backend (`http://localhost:8000`) for development.
 
-### Backend
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate # or venv\Scripts\activate on Windows
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
+## Concurrent Testing (Integrated Workflow)
+
+To test the frontend with the backend without breaking code:
+
+1. **Start the Backend**:
+   ```bash
+   cd backend
+   python -m venv venv
+   .\venv\Scripts\activate   # Powerhell/Windows
+   # source venv/bin/activate # Unix/macOS
+   pip install -r requirements.txt
+   uvicorn app.main:app --reload
+   ```
+2. **Start the Frontend**:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+3. **Collaboration Protocol**:
+   - **Xavier**: Handle **Frontend** strictly. Point `VITE_API_URL` to the backend. Use mock data/Zustand if the backend endpoint is not ready.
+   - **Kael**: Handle **Backend** strictly. Ensure the CORS configuration in `app/main.py` allows communication from `http://localhost:5173`.
+   - **API Stability**: Any change to an endpoint's structure must be updated in `docs/prd.md` first to ensure Xavier's frontend remains functional.
+
