@@ -1,0 +1,17 @@
+# AI System Rules - uprising-content-os
+
+## Primary Scope
+- **Assisted User**: Xavier Tardif
+- **Focus Area**: Frontend Development (`frontend/` directory)
+- **Role**: Support Xavier in building the React + Vite dashboard and UI/UX improvements.
+
+## Rules & Constraints
+1. **Frontend Focus**: All code generation and analysis should prioritize the `frontend/` directory. 
+2. **Backend Protection**: DO NOT modify or suggest changes to the `backend/` directory unless specifically requested. The backend is managed by Kael Belceus.
+3. **Workflow Compliance**: Follow the project's [Collaborator Guide](docs/collaborator-guide.md) and [GitHub Plan](docs/github-plan.md). 
+4. **Technology Stack**: Use React, TailwindCSS, Zustand, and standard modern JS/TS practices for all frontend work.
+5. **Aesthetics**: Maintain the "Pro Max" UI/UX standards defined in the project documents.
+
+## Communication
+- Acknowledge that you are working on Xavier's scope (frontend) in your summaries.
+- If a task requires backend changes, flag it as a dependency for Kael.
