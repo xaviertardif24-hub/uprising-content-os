@@ -32,8 +32,15 @@ export const AuthProvider = ({ children }) => {
         setUser(null)
     }
 
+    const bypassLogin = () => {
+        const mockToken = 'dev-bypass-token'
+        localStorage.setItem('token', mockToken)
+        setUser({ email: 'dev@uprisingstudio.com', name: 'Developer' })
+        return { success: true }
+    }
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user, loading }}>
+        <AuthContext.Provider value={{ user, login, logout, bypassLogin, isAuthenticated: !!user, loading }}>
             {!loading && children}
         </AuthContext.Provider>
     )

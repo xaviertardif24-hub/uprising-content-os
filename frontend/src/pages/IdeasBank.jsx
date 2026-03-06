@@ -38,88 +38,84 @@ const IdeasBank = () => {
     }
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Ideas Bank</h1>
-                    <p className="text-slate-500 dark:text-slate-400 mt-1 text-lg">Brainstorm and evaluate your next viral content pieces.</p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <div className="bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 px-4 py-2 rounded-2xl border border-amber-100 dark:border-amber-900/30 flex items-center gap-2 font-bold text-sm">
-                        <Wand2 size={16} />
-                        AI Suggestions Available
-                    </div>
+        <div className="space-y-6 animate-in fade-in duration-500">
+            <div className="flex items-center justify-between border-b border-[var(--color-notion-border)] pb-4 mb-6">
+                <h1 className="text-3xl font-semibold text-[var(--color-notion-text)] tracking-tight">Ideas Bank</h1>
+                <div className="flex items-center gap-2 text-[11px] font-medium text-amber-600 bg-amber-50 px-2 py-1 rounded">
+                    <Wand2 size={12} />
+                    AI Suggestions Available
                 </div>
             </div>
 
             {/* Input Area */}
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none transition-colors">
-                <form onSubmit={handleAddIdea} className="flex gap-4">
+            <div className="mb-8">
+                <form onSubmit={handleAddIdea} className="flex gap-2">
                     <div className="relative flex-1 group">
-                        <Lightbulb className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors" size={24} />
+                        <Lightbulb className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-notion-text-muted)] group-focus-within:text-amber-500 transition-colors" size={16} />
                         <input
                             type="text"
-                            placeholder="Post an idea for your next video or thread..."
+                            placeholder="Type a new idea here..."
                             value={newIdea}
                             onChange={(e) => setNewIdea(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all text-lg font-medium text-slate-900 dark:text-white placeholder:text-slate-400"
+                            className="w-full pl-9 pr-3 py-2 bg-transparent border border-[var(--color-notion-border)] hover:bg-[var(--color-notion-bg-hover)] focus:bg-[var(--color-notion-bg)] rounded-md outline-none transition-colors text-[var(--color-notion-text)] text-sm placeholder:text-[var(--color-notion-text-muted)]"
                         />
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 rounded-2xl font-black transition-all hover:scale-105 active:scale-95 flex items-center gap-2 shadow-xl shadow-blue-100 dark:shadow-blue-900/20">
-                        <Send size={20} />
+                    <button className="bg-[var(--color-notion-accent)] text-white px-4 py-2 rounded-md font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity whitespace-nowrap">
+                        <Send size={14} />
                         Add Idea
                     </button>
                 </form>
             </div>
 
             {/* Ideas List */}
-            <div className="grid grid-cols-1 gap-4">
+            <div className="flex flex-col gap-1">
                 <AnimatePresence>
                     {ideas.map((idea, index) => (
                         <motion.div
                             key={idea.id}
-                            initial={{ opacity: 0, x: -20 }}
+                            initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.3, delay: index * 0.05 }}
-                            className="group bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl dark:hover:bg-slate-800/50 transition-all duration-300 flex items-center justify-between"
+                            exit={{ opacity: 0, scale: 0.98 }}
+                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                            className="group p-2 -mx-2 rounded hover:bg-[var(--color-notion-bg-hover)] transition-colors duration-150 flex items-center justify-between"
                         >
-                            <div className="flex items-center gap-6">
-                                <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-300 dark:text-slate-600 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 group-hover:text-blue-500 transition-colors">
-                                    <Lightbulb size={28} />
+                            <div className="flex items-center gap-3">
+                                <div className="w-6 h-6 flex items-center justify-center text-[var(--color-notion-text-muted)] group-hover:text-amber-500 transition-colors">
+                                    <Lightbulb size={16} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{idea.title}</h3>
-                                    <div className="flex items-center gap-4 mt-1 text-sm text-slate-400 dark:text-slate-500 font-medium">
+                                    <h3 className="text-sm font-medium text-[var(--color-notion-text)] leading-snug group-hover:text-[var(--color-notion-accent)] transition-colors">{idea.title}</h3>
+                                    <div className="flex items-center gap-2 mt-0.5 text-xs text-[var(--color-notion-text-meta)]">
                                         <span>{idea.date}</span>
-                                        <span className="w-1 h-1 bg-slate-200 dark:bg-slate-700 rounded-full"></span>
-                                        <span className={`px-2 py-0.5 rounded-lg text-xs font-bold ${statusColors[idea.status] || statusColors.Draft}`}>
+                                        <span>•</span>
+                                        <span className={`px-1.5 py-0.5 rounded-[4px] font-medium text-[10px] ${idea.status === 'New' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                                                idea.status === 'Draft' ? 'bg-[var(--color-notion-bg-subtle)] text-[var(--color-notion-text-muted)]' :
+                                                    'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                                            }`}>
                                             {idea.status}
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-8">
-                                <div className="text-center">
-                                    <div className="flex items-center gap-1.5 text-amber-500 mb-1">
-                                        <Star size={18} className="fill-amber-500" />
-                                        <span className="text-xl font-black text-slate-900 dark:text-white">
-                                            {idea.score}
-                                        </span>
-                                    </div>
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">AI Score</span>
+                            <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-1.5 text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded">
+                                    <Star size={12} className="fill-amber-500" />
+                                    <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">
+                                        {idea.score}
+                                    </span>
                                 </div>
 
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <button
                                         onClick={() => setIdeas(ideas.filter(i => i.id !== idea.id))}
-                                        className="p-3 text-slate-300 dark:text-slate-600 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
+                                        className="p-1.5 text-[var(--color-notion-text-muted)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
+                                        title="Delete Idea"
                                     >
-                                        <Trash2 size={20} />
+                                        <Trash2 size={14} />
                                     </button>
-                                    <button className="bg-slate-900 dark:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 dark:hover:bg-blue-500 transition-all shadow-lg active:scale-95">
-                                        Promote to Library
+                                    <button className="text-[11px] font-medium text-[var(--color-notion-accent)] hover:text-white border border-[var(--color-notion-accent)] hover:bg-[var(--color-notion-accent)] px-2 py-1 rounded transition-colors">
+                                        Promote
                                     </button>
                                 </div>
                             </div>

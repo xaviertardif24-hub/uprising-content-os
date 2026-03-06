@@ -31,31 +31,31 @@ const CustomToolbar = (toolbar) => {
     const goToCurrent = () => { toolbar.onNavigate('TODAY') }
 
     return (
-        <div className="flex items-center justify-between mb-8 bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-100/50 dark:shadow-none transition-colors">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4 pb-4 border-b border-[var(--color-notion-border)] gap-4">
             <div className="flex items-center gap-4">
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white capitalize">{toolbar.label}</h2>
-                <div className="flex bg-slate-50 dark:bg-slate-800/50 p-1 rounded-xl border border-slate-100 dark:border-slate-700">
-                    <button onClick={goToBack} className="p-2 hover:bg-white dark:hover:bg-slate-700 hover:shadow-sm rounded-lg transition-all text-slate-600 dark:text-slate-400">
-                        <ChevronLeft size={20} />
+                <h2 className="text-xl font-semibold text-[var(--color-notion-text)] capitalize min-w-[150px]">{toolbar.label}</h2>
+                <div className="flex items-center bg-[var(--color-notion-bg)] border border-[var(--color-notion-border)] rounded-md overflow-hidden">
+                    <button onClick={goToBack} className="p-1.5 hover:bg-[var(--color-notion-bg-hover)] transition-colors text-[var(--color-notion-text-muted)] border-r border-[var(--color-notion-border)]">
+                        <ChevronLeft size={16} />
                     </button>
-                    <button onClick={goToCurrent} className="px-4 py-1.5 text-sm font-bold border-x border-slate-100 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700 hover:shadow-sm rounded-none transition-all text-slate-900 dark:text-white">
+                    <button onClick={goToCurrent} className="px-3 py-1 text-xs font-medium hover:bg-[var(--color-notion-bg-hover)] transition-colors text-[var(--color-notion-text)]">
                         Today
                     </button>
-                    <button onClick={goToNext} className="p-2 hover:bg-white dark:hover:bg-slate-700 hover:shadow-sm rounded-lg transition-all text-slate-600 dark:text-slate-400">
-                        <ChevronRight size={20} />
+                    <button onClick={goToNext} className="p-1.5 hover:bg-[var(--color-notion-bg-hover)] transition-colors text-[var(--color-notion-text-muted)] border-l border-[var(--color-notion-border)]">
+                        <ChevronRight size={16} />
                     </button>
                 </div>
             </div>
 
-            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800/50 p-1 rounded-xl border border-slate-100 dark:border-slate-700">
+            <div className="flex items-center bg-[var(--color-notion-bg)] border border-[var(--color-notion-border)] rounded-md overflow-hidden">
                 {['month', 'week', 'agenda'].map((view) => (
                     <button
                         key={view}
                         onClick={() => toolbar.onView(view)}
-                        className={`px-4 py-2 rounded-lg text-sm font-bold transition-all capitalize ${toolbar.view === view
-                            ? 'bg-white dark:bg-slate-700 shadow-md text-blue-600 dark:text-blue-400'
-                            : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
-                            }`}
+                        className={`px-3 py-1 text-xs transition-colors capitalize ${toolbar.view === view
+                            ? 'bg-[var(--color-notion-bg-active)] font-medium text-[var(--color-notion-text)]'
+                            : 'hover:bg-[var(--color-notion-bg-hover)] text-[var(--color-notion-text-muted)]'
+                            } ${view !== 'agenda' ? 'border-r border-[var(--color-notion-border)]' : ''}`}
                     >
                         {view}
                     </button>
@@ -112,14 +112,7 @@ const Calendar = () => {
     }
 
     return (
-        <div className="h-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Publishing Calendar</h1>
-                    <p className="text-slate-500 dark:text-slate-400 mt-1 text-lg">Plan and visualize your content rollout strategy.</p>
-                </div>
-            </div>
-
+        <div className="h-full space-y-4 animate-in fade-in duration-500">
             <div className="h-[750px] calendar-container">
                 <DnDCalendar
                     localizer={localizer}
@@ -152,73 +145,48 @@ const Calendar = () => {
         .rbc-calendar { font-family: inherit; background: transparent; }
 
         /* ── MONTH VIEW ── */
-        .rbc-month-view { border-radius: 2rem; overflow: hidden; border: 1px solid #f1f5f9; background: white; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05); }
-        .rbc-header { padding: 12px; font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; color: #64748b; border-bottom: 1px solid #f1f5f9; }
-        .rbc-off-range-bg { background: #f8fafc; }
-        .rbc-day-bg + .rbc-day-bg { border-left: 1px solid #f1f5f9; }
-        .rbc-month-row + .rbc-month-row { border-top: 1px solid #f1f5f9; }
-        .rbc-today { background: #eff6ff !important; }
-        .rbc-show-more { color: #3b82f6; font-weight: bold; font-size: 0.75rem; padding: 2px 6px; }
-        .rbc-date-cell { padding: 4px 10px; font-weight: 700; font-size: 0.85rem; color: #475569; }
-        .rbc-date-cell.rbc-now { color: #3b82f6; }
+        .rbc-month-view { border-radius: 6px; overflow: hidden; border: 1px solid var(--color-notion-border); background: var(--color-notion-bg); box-shadow: none; }
+        .rbc-header { padding: 8px; font-weight: 500; font-size: 0.75rem; color: var(--color-notion-text-muted); border-bottom: 1px solid var(--color-notion-border); }
+        .rbc-off-range-bg { background: var(--color-notion-bg-subtle); }
+        .rbc-day-bg + .rbc-day-bg { border-left: 1px solid var(--color-notion-border); }
+        .rbc-month-row + .rbc-month-row { border-top: 1px solid var(--color-notion-border); }
+        .rbc-today { background: var(--color-notion-bg-active) !important; }
+        .rbc-show-more { color: var(--color-notion-text-meta); font-weight: 500; font-size: 0.75rem; padding: 2px 6px; }
+        .rbc-date-cell { padding: 4px 8px; font-weight: 500; font-size: 0.8rem; color: var(--color-notion-text); }
+        .rbc-date-cell.rbc-now { color: var(--color-notion-accent); font-weight: 600; }
 
         /* ── WEEK / DAY VIEW ── */
-        .rbc-time-view { border-radius: 2rem; overflow: hidden; border: 1px solid #f1f5f9; background: white; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05); }
-        .rbc-time-header { border-bottom: 2px solid #f1f5f9; }
-        .rbc-time-header-content { border-left: 1px solid #f1f5f9; }
-        .rbc-time-header-cell .rbc-header { padding: 14px 8px; font-weight: 800; font-size: 0.7rem; color: #64748b; border-bottom: none; }
-        .rbc-time-header-cell.rbc-today .rbc-header { color: #3b82f6; }
-        .rbc-time-slot { border-top: 1px solid #f8fafc; font-size: 0.7rem; font-weight: 700; color: #94a3b8; }
-        .rbc-time-gutter .rbc-time-slot { padding: 2px 12px; text-align: right; }
-        .rbc-timeslot-group { min-height: 60px; border-bottom: 1px solid #f1f5f9; }
-        .rbc-time-content { border-top: 1px solid #f1f5f9; }
-        .rbc-time-content > * + * > * { border-left: 1px solid #f1f5f9; }
-        .rbc-current-time-indicator { background: #3b82f6; height: 2px; }
-        .rbc-current-time-indicator::before { content: ''; position: absolute; left: -4px; top: -4px; width: 10px; height: 10px; background: #3b82f6; border-radius: 50%; }
+        .rbc-time-view { border-radius: 6px; overflow: hidden; border: 1px solid var(--color-notion-border); background: var(--color-notion-bg); box-shadow: none; }
+        .rbc-time-header { border-bottom: 1px solid var(--color-notion-border); }
+        .rbc-time-header-content { border-left: 1px solid var(--color-notion-border); }
+        .rbc-time-header-cell .rbc-header { padding: 10px 8px; font-weight: 500; font-size: 0.75rem; color: var(--color-notion-text-muted); border-bottom: none; }
+        .rbc-time-header-cell.rbc-today .rbc-header { color: var(--color-notion-accent); }
+        .rbc-time-slot { border-top: 1px solid var(--color-notion-border-strong); font-size: 0.7rem; color: var(--color-notion-text-meta); }
+        .rbc-time-gutter .rbc-time-slot { padding: 2px 8px; text-align: right; }
+        .rbc-timeslot-group { min-height: 60px; border-bottom: 1px solid var(--color-notion-border); }
+        .rbc-time-content { border-top: 1px solid var(--color-notion-border); }
+        .rbc-time-content > * + * > * { border-left: 1px solid var(--color-notion-border); }
+        .rbc-current-time-indicator { background: var(--color-notion-accent); height: 2px; }
+        .rbc-current-time-indicator::before { content: ''; position: absolute; left: -4px; top: -4px; width: 10px; height: 10px; background: var(--color-notion-accent); border-radius: 50%; }
 
         /* ── AGENDA VIEW ── */
-        .rbc-agenda-view { border-radius: 2rem; overflow: hidden; border: 1px solid #f1f5f9; background: white; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05); }
+        .rbc-agenda-view { border-radius: 6px; overflow: hidden; border: 1px solid var(--color-notion-border); background: var(--color-notion-bg); box-shadow: none; }
         .rbc-agenda-view table { border-collapse: collapse; width: 100%; }
-        .rbc-agenda-view table thead th { padding: 14px 20px; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; border-bottom: 2px solid #f1f5f9; background: #f8fafc; }
-        .rbc-agenda-date-cell, .rbc-agenda-time-cell { padding: 16px 20px; font-weight: 700; font-size: 0.85rem; color: #475569; border-bottom: 1px solid #f8fafc; white-space: nowrap; vertical-align: top; }
-        .rbc-agenda-time-cell { color: #94a3b8; font-size: 0.75rem; }
-        .rbc-agenda-event-cell { padding: 14px 20px; border-bottom: 1px solid #f8fafc; }
-        .rbc-agenda-empty { padding: 60px; text-align: center; color: #94a3b8; font-weight: 700; }
+        .rbc-agenda-view table thead th { padding: 12px 16px; font-weight: 500; font-size: 0.75rem; color: var(--color-notion-text-muted); border-bottom: 1px solid var(--color-notion-border); background: var(--color-notion-bg-subtle); text-align: left; }
+        .rbc-agenda-date-cell, .rbc-agenda-time-cell { padding: 12px 16px; font-size: 0.85rem; color: var(--color-notion-text); border-bottom: 1px solid var(--color-notion-border); white-space: nowrap; vertical-align: top; }
+        .rbc-agenda-time-cell { color: var(--color-notion-text-meta); font-size: 0.75rem; }
+        .rbc-agenda-event-cell { padding: 12px 16px; border-bottom: 1px solid var(--color-notion-border); }
+        .rbc-agenda-empty { padding: 40px; text-align: center; color: var(--color-notion-text-meta); font-size: 0.85rem;}
 
         /* ── EVENTS ── */
-        .rbc-event { transition: all 0.2s; border-radius: 8px; border: none !important; }
-        .rbc-event:hover { transform: scale(1.02); z-index: 10; cursor: pointer; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.25); }
-        .rbc-event-label { font-size: 0.65rem; font-weight: 700; opacity: 0.85; }
-        .rbc-event-content { font-size: 0.75rem; font-weight: 700; }
-        .rbc-addons-dnd-drag-preview { opacity: 0.75; transform: scale(1.04); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .rbc-event { transition: opacity 0.2s; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: none !important; }
+        .rbc-event:hover { opacity: 0.9; z-index: 10; cursor: pointer; }
+        .rbc-event-label { font-size: 0.65rem; opacity: 0.8; margin-bottom: 2px;}
+        .rbc-event-content { font-size: 0.75rem; }
+        .rbc-addons-dnd-drag-preview { opacity: 0.5; }
 
-        /* ── DARK MODE — MONTH ── */
-        .dark .rbc-month-view { border-color: #1e293b; background: #0f172a; box-shadow: none; }
-        .dark .rbc-header { color: #475569; border-bottom-color: #1e293b; background: #0f172a; }
-        .dark .rbc-off-range-bg { background: #020617; }
-        .dark .rbc-day-bg + .rbc-day-bg { border-left-color: #1e293b; }
-        .dark .rbc-month-row + .rbc-month-row { border-top-color: #1e293b; }
-        .dark .rbc-today { background: #1e3a5f !important; }
-        .dark .rbc-date-cell { color: #64748b; }
-        .dark .rbc-date-cell.rbc-now { color: #3b82f6; }
-        .dark .rbc-show-more { color: #60a5fa; }
-
-        /* ── DARK MODE — WEEK/DAY ── */
-        .dark .rbc-time-view { border-color: #1e293b; background: #0f172a; box-shadow: none; }
-        .dark .rbc-time-header { border-bottom-color: #1e293b; background: #0f172a; }
-        .dark .rbc-time-header-content { border-left-color: #1e293b; }
-        .dark .rbc-time-header-cell .rbc-header { color: #475569; }
-        .dark .rbc-time-header-cell.rbc-today .rbc-header { color: #3b82f6; }
-        .dark .rbc-timeslot-group { border-bottom-color: #1e293b; }
-        .dark .rbc-time-slot { border-top-color: #0f172a; color: #334155; }
-        .dark .rbc-time-content { border-top-color: #1e293b; }
-        .dark .rbc-time-content > * + * > * { border-left-color: #1e293b; }
-
-        /* ── DARK MODE — AGENDA ── */
-        .dark .rbc-agenda-view { border-color: #1e293b; background: #0f172a; box-shadow: none; }
-        .dark .rbc-agenda-view table thead th { background: #020617; color: #475569; border-bottom-color: #1e293b; }
-        .dark .rbc-agenda-date-cell, .dark .rbc-agenda-time-cell { color: #475569; border-bottom-color: #1e293b; }
-        .dark .rbc-agenda-event-cell { border-bottom-color: #1e293b; }
+        /* Disable Tailwind's dark mode specific rules for calendar as we use CSS variables now */
+        .dark .rbc-month-view, .dark .rbc-time-view, .dark .rbc-agenda-view { border-color: var(--color-notion-border); background: var(--color-notion-bg); }
       `}} />
 
         </div>

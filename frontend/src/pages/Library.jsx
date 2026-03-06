@@ -38,39 +38,33 @@ const Library = () => {
     }
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="space-y-6 animate-in fade-in duration-500">
             {/* Header Section */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Content Library</h1>
-                    <p className="text-slate-500 dark:text-slate-400 mt-1 text-lg">Manage and organize your video transcription assets.</p>
-                </div>
-                <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-bold shadow-xl shadow-blue-100 transition-all hover:scale-105 active:scale-95">
-                    <Plus size={22} />
-                    <span>Import from Drive</span>
+            <div className="flex items-center justify-between border-b border-[var(--color-notion-border)] pb-4 mb-6">
+                <h1 className="text-3xl font-semibold text-[var(--color-notion-text)] tracking-tight">Library</h1>
+                <button className="flex items-center gap-2 bg-[var(--color-notion-accent)] text-white px-4 py-2 rounded-md font-medium text-sm hover:opacity-90 transition-opacity">
+                    <Plus size={16} />
+                    <span>New Content</span>
                 </button>
             </div>
 
-            {/* Filters & Search Bar */}
-            <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col lg:flex-row gap-5 sticky top-0 z-10 transition-colors">
+            {/* Filters & Search Bar - Flat UI */}
+            <div className="flex flex-col lg:flex-row gap-4 items-center mb-6">
                 {/* Search */}
-                <div className="relative flex-1 group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={20} />
+                <div className="relative flex-1 group max-w-md">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-notion-text-muted)]" size={16} />
                     <input
                         type="text"
-                        placeholder="Search titles, hooks, or topics..."
+                        placeholder="Search..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all text-slate-900 dark:text-white font-medium"
+                        className="w-full pl-9 pr-3 py-1.5 bg-transparent border border-[var(--color-notion-border)] hover:bg-[var(--color-notion-bg-hover)] focus:bg-[var(--color-notion-bg)] rounded-md outline-none transition-colors text-[var(--color-notion-text)] text-sm"
                     />
                 </div>
 
                 {/* AI Score Filter */}
-                <div className="flex flex-col gap-1 min-w-[160px] px-2">
-                    <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
-                        <span>Min Score</span>
-                        <span className="text-blue-500">{minScore}+</span>
-                    </div>
+                <div className="flex items-center gap-3">
+                    <span className="text-xs text-[var(--color-notion-text-muted)]">Score &ge; {minScore}</span>
                     <input
                         type="range"
                         min="0"
@@ -78,23 +72,19 @@ const Library = () => {
                         step="0.5"
                         value={minScore}
                         onChange={(e) => setMinScore(parseFloat(e.target.value))}
-                        className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                        className="w-24 h-1 bg-[var(--color-notion-border-strong)] rounded-full appearance-none flex-shrink-0"
                     />
                 </div>
 
-                {/* Pillar Filter (Pills) */}
-                <div className="flex items-center gap-3 overflow-x-auto pb-2 lg:pb-0 no-scrollbar">
-                    <div className="flex items-center gap-2 pr-4 border-r border-slate-200 mr-2 text-slate-400">
-                        <Filter size={18} />
-                        <span className="text-xs font-bold uppercase tracking-widest">Pillars</span>
-                    </div>
+                {/* Pillar Filter */}
+                <div className="flex items-center gap-1 overflow-x-auto no-scrollbar mx-2">
                     {pillars.map((pillar) => (
                         <button
                             key={pillar}
                             onClick={() => setSelectedPillar(pillar)}
-                            className={`px-5 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all duration-300 ${selectedPillar === pillar
-                                ? 'bg-slate-900 dark:bg-blue-600 text-white shadow-lg shadow-slate-300 dark:shadow-blue-900/20 scale-105'
-                                : 'bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200'
+                            className={`px-3 py-1 rounded-[4px] text-sm whitespace-nowrap transition-colors ${selectedPillar === pillar
+                                ? 'bg-[var(--color-notion-bg-active)] font-medium text-[var(--color-notion-text)]'
+                                : 'text-[var(--color-notion-text-muted)] hover:bg-[var(--color-notion-bg-hover)] hover:text-[var(--color-notion-text)]'
                                 }`}
                         >
                             {pillar}
@@ -103,47 +93,47 @@ const Library = () => {
                 </div>
 
                 {/* View Toggle */}
-                <div className="flex items-center gap-1 bg-slate-50 dark:bg-slate-800/50 p-1.5 rounded-2xl ml-auto border border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-1 ml-auto">
                     <button
                         onClick={() => setViewMode('grid')}
-                        className={`p-2.5 rounded-xl transition-all duration-300 ${viewMode === 'grid' ? 'bg-white dark:bg-slate-700 shadow-md text-blue-600 dark:text-blue-400 scale-110' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`}
+                        className={`p-1.5 rounded-[4px] transition-colors ${viewMode === 'grid' ? 'bg-[var(--color-notion-bg-active)] text-[var(--color-notion-text)]' : 'text-[var(--color-notion-text-muted)] hover:bg-[var(--color-notion-bg-hover)]'}`}
                     >
-                        <Grid size={20} />
+                        <Grid size={16} />
                     </button>
                     <button
                         onClick={() => setViewMode('list')}
-                        className={`p-2.5 rounded-xl transition-all duration-300 ${viewMode === 'list' ? 'bg-white dark:bg-slate-700 shadow-md text-blue-600 dark:text-blue-400 scale-110' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`}
+                        className={`p-1.5 rounded-[4px] transition-colors ${viewMode === 'list' ? 'bg-[var(--color-notion-bg-active)] text-[var(--color-notion-text)]' : 'text-[var(--color-notion-text-muted)] hover:bg-[var(--color-notion-bg-hover)]'}`}
                     >
-                        <List size={20} />
+                        <List size={16} />
                     </button>
                 </div>
             </div>
 
             {/* Grid View */}
             {isLoading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                        <div key={n} className="bg-white rounded-3xl p-4 border border-slate-100 shadow-sm">
-                            <Skeleton className="aspect-video w-full mb-4" />
-                            <Skeleton className="h-6 w-3/4 mb-2" variant="text" />
-                            <Skeleton className="h-4 w-1/2" variant="text" />
+                        <div key={n} className="bg-[var(--color-notion-bg)] rounded-md p-3 border border-[var(--color-notion-border)]">
+                            <Skeleton className="aspect-video w-full mb-3" />
+                            <Skeleton className="h-4 w-3/4 mb-1.5" variant="text" />
+                            <Skeleton className="h-3 w-1/2" variant="text" />
                         </div>
                     ))}
                 </div>
             ) : filteredItems.length > 0 ? (
                 <motion.div
                     layout
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
                 >
                     <AnimatePresence>
                         {filteredItems.map((item, index) => (
                             <motion.div
                                 key={item.id}
                                 layout
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
-                                transition={{ duration: 0.3, delay: index * 0.05 }}
+                                transition={{ duration: 0.2, delay: index * 0.05 }}
                             >
                                 <ContentCard
                                     item={item}
@@ -154,17 +144,15 @@ const Library = () => {
                     </AnimatePresence>
                 </motion.div>
             ) : (
-                <div className="flex flex-col items-center justify-center py-32 bg-white rounded-[2.5rem] border-4 border-dashed border-slate-100">
-                    <div className="bg-slate-50 p-10 rounded-full text-slate-200 mb-6 animate-pulse">
-                        <Search size={64} />
-                    </div>
-                    <h3 className="text-2xl font-black text-slate-900">No content matches your search</h3>
-                    <p className="text-slate-500 mt-2 text-lg">Try a different keyword or pillar.</p>
+                <div className="flex flex-col items-center justify-center py-20 bg-[var(--color-notion-bg-subtle)] rounded-md border border-[var(--color-notion-border)]">
+                    <Search size={32} className="text-[var(--color-notion-text-muted)] mb-4" />
+                    <h3 className="text-sm font-semibold text-[var(--color-notion-text)]">No results</h3>
+                    <p className="text-[var(--color-notion-text-meta)] text-xs mt-1 mb-4">Try different keywords or filters.</p>
                     <button
                         onClick={() => { setSearch(''); setSelectedPillar('All') }}
-                        className="mt-6 bg-slate-900 text-white px-8 py-3 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl active:scale-95"
+                        className="text-[var(--color-notion-text)] text-xs font-medium px-3 py-1.5 border border-[var(--color-notion-border)] rounded bg-[var(--color-notion-bg)] hover:bg-[var(--color-notion-bg-hover)] transition-colors"
                     >
-                        Clear all filters
+                        Clear filters
                     </button>
                 </div>
             )}

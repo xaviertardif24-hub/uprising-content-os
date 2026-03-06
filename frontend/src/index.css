@@ -4,22 +4,38 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #0f172a;
-  --color-secondary: #3b82f6;
-  --color-accent: #f59e0b;
+  --color-notion-bg: #ffffff;
+  --color-notion-bg-subtle: #f7f7f7;
+  --color-notion-bg-hover: rgba(55, 53, 47, 0.06);
+  --color-notion-bg-active: rgba(55, 53, 47, 0.09);
+  --color-notion-text: #37352f;
+  --color-notion-text-muted: #b3b3b3;
+  --color-notion-text-meta: #888888;
+  --color-notion-border: rgba(15, 15, 15, 0.06);
+  --color-notion-border-strong: rgba(15, 15, 15, 0.1);
+  --color-notion-accent: #2eaadc; /* Bleu Notion */
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-notion-bg);
+  color: var(--color-notion-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .dark body,
 .dark {
-  background-color: #020617;
-  color: #f1f5f9;
+  /* Bases Notion Dark Mode (simplifié pour l'instant) */
+  --color-notion-bg: #191919;
+  --color-notion-bg-subtle: #202020;
+  --color-notion-bg-hover: rgba(255, 255, 255, 0.05);
+  --color-notion-bg-active: rgba(255, 255, 255, 0.1);
+  --color-notion-text: #ffffff;
+  --color-notion-border: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-notion-bg);
+  color: var(--color-notion-text);
 }
 
 /* Custom Scrollbar Base */

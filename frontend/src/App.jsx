@@ -8,7 +8,8 @@ import Library from './pages/Library'
 import Calendar from './pages/Calendar'
 import IdeasBank from './pages/IdeasBank'
 import Settings from './pages/Settings'
-import MainLayout from './components/layout/MainLayout'
+import BlockEditorDemo from './pages/BlockEditorDemo'
+import MainLayoutNotion from './components/layout/Notion/MainLayoutNotion'
 
 const ProtectedRoute = ({ children }) => {
     const { isAuthenticated } = useAuth()
@@ -59,7 +60,7 @@ function AppContent() {
                     path="/"
                     element={
                         <ProtectedRoute>
-                            <MainLayout />
+                            <MainLayoutNotion />
                         </ProtectedRoute>
                     }
                 >
@@ -68,6 +69,7 @@ function AppContent() {
                     <Route path="library" element={<AnimatedPage><Library /></AnimatedPage>} />
                     <Route path="calendar" element={<AnimatedPage><Calendar /></AnimatedPage>} />
                     <Route path="ideas" element={<AnimatedPage><IdeasBank /></AnimatedPage>} />
+                    <Route path="editor" element={<AnimatedPage><BlockEditorDemo /></AnimatedPage>} />
                     <Route path="settings" element={<AnimatedPage><Settings /></AnimatedPage>} />
                 </Route>
             </Routes>
