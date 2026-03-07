@@ -12,10 +12,12 @@ import {
     LayoutGrid
 } from 'lucide-react';
 import { useToast } from '../components/common/Toaster';
+import { useNavigate } from 'react-router-dom';
 
 const Library = () => {
     const [activeTab, setActiveTab] = useState('Espaces d\'équipe');
     const { toast } = useToast();
+    const navigate = useNavigate();
 
     const tabs = [
         { id: 'Espaces d\'équipe', icon: LayoutGrid },
@@ -90,8 +92,8 @@ const Library = () => {
                 <div 
                     role="button"
                     tabIndex={0}
-                    onClick={() => toast("Ouverture de l'espace d'équipe")}
-                    onKeyDown={(e) => e.key === 'Enter' && toast("Ouverture de l'espace d'équipe")}
+                    onClick={() => navigate('/editor')}
+                    onKeyDown={(e) => e.key === 'Enter' && navigate('/editor')}
                     className="grid grid-cols-[1.5fr_1fr_0.5fr_0.5fr] px-2 py-3 text-[14px] group hover:bg-[rgba(55,53,47,0.03)] cursor-pointer rounded-lg transition-colors border-b border-[rgba(55,53,47,0.03)] items-center"
                 >
                     <div className="flex items-center gap-2">

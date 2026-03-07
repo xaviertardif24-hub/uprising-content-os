@@ -108,7 +108,11 @@ const IdeasBank = () => {
 
                                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <button
-                                        onClick={() => setIdeas(ideas.filter(i => i.id !== idea.id))}
+                                        onClick={() => {
+                                            if (window.confirm("Êtes-vous sûr de vouloir supprimer cette idée ?")) {
+                                                setIdeas(ideas.filter(i => i.id !== idea.id));
+                                            }
+                                        }}
                                         className="p-1.5 text-[var(--color-notion-text-muted)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
                                         title="Delete Idea"
                                     >

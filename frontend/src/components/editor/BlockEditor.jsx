@@ -32,9 +32,6 @@ const Block = ({ id, content, type, onUpdate, onAdd, onRemove, onFocusNext, auto
                 setSlashFilter(textAfterSlash);
                 if (!slashMenuOpen) {
                     setSlashMenuOpen(true);
-                    // Minimal position estimation
-                    const rect = e.target.getBoundingClientRect();
-                    setMenuPosition({ x: rect.left, y: rect.bottom });
                 }
                 return;
             }
@@ -45,6 +42,7 @@ const Block = ({ id, content, type, onUpdate, onAdd, onRemove, onFocusNext, auto
     const handleKeyDown = (e) => {
         if (slashMenuOpen) {
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'Enter') {
+                e.preventDefault();
                 return; // Let SlashMenu handle these
             }
             if (e.key === 'Escape') {
@@ -135,18 +133,14 @@ const Block = ({ id, content, type, onUpdate, onAdd, onRemove, onFocusNext, auto
                     rows={1}
                     style={{ minHeight: '24px' }}
                 />
+                {slashMenuOpen && (
+                    <SlashMenu
+                        filterText={slashFilter}
+                        onSelect={handleSelectSlashMenuItem}
+                        onClose={() => setSlashMenuOpen(false)}
+                    />
+                )}
             </div>
-
-            {/* Portal-like Slash Menu (rendered conditionally) */}
-            {slashMenuOpen && (
-                <SlashMenu
-                    x={menuPosition.x}
-                    y={menuPosition.y}
-                    filterText={slashFilter}
-                    onSelect={handleSelectSlashMenuItem}
-                    onClose={() => setSlashMenuOpen(false)}
-                />
-            )}
         </div>
     );
 };

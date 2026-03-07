@@ -62,11 +62,11 @@ const SlashMenu = ({ x, y, filterText, onSelect, onClose }) => {
     return (
         <div
             ref={menuRef}
-            className="fixed z-[100] w-72 bg-white rounded-lg shadow-[0_4px_24px_rgba(0,0,0,0.1),0_1px_4px_rgba(0,0,0,0.05)] border border-[var(--color-notion-border)] py-2 text-[var(--color-notion-text)] overflow-hidden"
+            className="absolute z-50 w-72 bg-white rounded-lg shadow-[0_4px_24px_rgba(0,0,0,0.1),0_1px_4px_rgba(0,0,0,0.05)] border border-[var(--color-notion-border)] py-2 text-[var(--color-notion-text)] overflow-hidden"
             style={{
-                top: y,
-                left: x,
-                // Assurer que le menu ne sorte pas de l'écran (basique)
+                top: '100%',
+                left: 0,
+                marginTop: '4px',
                 maxHeight: '300px',
                 overflowY: 'auto'
             }}
