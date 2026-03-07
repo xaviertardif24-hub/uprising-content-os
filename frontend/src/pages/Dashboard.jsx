@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
     Clock, CheckSquare, Sparkles, TrendingUp, Search, 
-    FileText, Users, Home, Workflow, Settings, FileIcon, UserIcon, LibraryBig
+    FileText, Users, Home, Workflow, Settings, FileIcon, UserIcon, LibraryBig, Star
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import { useToast } from '../components/common/Toaster'
 
 const RECENTLY_VISITED = [
     { title: 'Example PRD', icon: FileText, date: 'J Feb 21', color: 'text-blue-500' },
@@ -40,11 +41,11 @@ const TRENDING = [
     { title: 'Label', icon: FileIcon },
 ]
 
-// Import Star here so it's defined
-import { Star } from 'lucide-react'
+
 
 const Dashboard = () => {
     const { user } = useAuth()
+    const { toast } = useToast()
     const userName = user?.name || 'Jane Smith' // Fallback for matching image exactly
     
     return (
@@ -106,6 +107,11 @@ const Dashboard = () => {
                                         <span className="text-sm font-medium text-[#37352F]">{task.title}</span>
                                     </div>
                                     <div className="flex items-center gap-6 text-sm text-[rgba(55,53,47,0.65)]">
+                                        <div className="flex items-center" title="Assigné à Jane Smith">
+                                            <div className="w-5 h-5 rounded-full bg-linear-to-br from-blue-500 to-purple-600 flex justify-center items-center font-semibold text-white text-[10px]">
+                                                J
+                                            </div>
+                                        </div>
                                         <span className="w-32 text-right">{task.date}</span>
                                         <span className={`px-2 py-0.5 rounded-sm text-xs font-medium ${task.statusColor} w-24 text-center`}>
                                             {task.status}
@@ -131,7 +137,14 @@ const Dashboard = () => {
                         </div>
                         <div className="flex flex-col gap-1">
                             {SUGGESTED.map((item, idx) => (
-                                <div key={idx} className="flex items-center gap-2 p-1.5 rounded hover:bg-[rgba(55,53,47,0.08)] cursor-pointer text-sm text-[#37352F]">
+                                <div 
+                                    key={idx} 
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={() => toast(`Navigation vers ${item.title}`)}
+                                    onKeyDown={(e) => e.key === 'Enter' && toast(`Navigation vers ${item.title}`)}
+                                    className="flex items-center gap-2 p-1.5 rounded hover:bg-[rgba(55,53,47,0.08)] cursor-pointer text-sm text-[#37352F]"
+                                >
                                     <div className="text-[rgba(55,53,47,0.65)]"><item.icon size={16} /></div>
                                     <span className="font-medium">{item.title}</span>
                                 </div>
@@ -152,7 +165,14 @@ const Dashboard = () => {
                         </div>
                         <div className="flex flex-col gap-1">
                             {TRENDING.map((item, idx) => (
-                                <div key={idx} className="flex items-center gap-2 p-1.5 rounded hover:bg-[rgba(55,53,47,0.08)] cursor-pointer text-sm text-[#37352F]">
+                                <div 
+                                    key={idx} 
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={() => toast(`Ouverture de la tendance : ${item.title}`)}
+                                    onKeyDown={(e) => e.key === 'Enter' && toast(`Ouverture de la tendance : ${item.title}`)}
+                                    className="flex items-center gap-2 p-1.5 rounded hover:bg-[rgba(55,53,47,0.08)] cursor-pointer text-sm text-[#37352F]"
+                                >
                                     <div className="text-[rgba(55,53,47,0.65)]"><item.icon size={16} /></div>
                                     <span className="font-medium truncate">{item.title}</span>
                                 </div>

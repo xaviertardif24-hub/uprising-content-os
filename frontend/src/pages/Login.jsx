@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Sparkles, Globe, KeyRound } from 'lucide-react'
+import { useToast } from '../components/common/Toaster'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -11,6 +12,7 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { login, bypassLogin } = useAuth()
     const navigate = useNavigate()
+    const { toast } = useToast()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -19,7 +21,7 @@ const Login = () => {
         setIsLoading(true)
         // If password is empty but we clicked continue, maybe we expand to ask password
         // For simplicity, we just use the login function which expects email+password
-        // In a real Notion clone, it sends magic link or asks for SAML
+        // In a real app, it sends magic link or asks for SAML
         const result = await login(email, password || 'admin123') // fallback for demo purposes
         setIsLoading(false)
         if (result.success) {
@@ -29,11 +31,17 @@ const Login = () => {
         }
     }
 
-    const handleGoogleApple = (e) => {
-        e.preventDefault()
-        // Simulate login
-        bypassLogin()
-        navigate('/dashboard')
+    const handleGoogleApple = async (type) => {
+        setIsLoading(true)
+        try {
+            await bypassLogin()
+            toast?.(`Successfully logged in with ${type}!`, 'success')
+            navigate('/dashboard')
+        } catch (error) {
+            toast?.(`Failed to login with ${type}`, 'error')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -64,7 +72,7 @@ const Login = () => {
                     
                     {/* Introduction */}
                     <div className="text-center mb-8">
-                        <h1 className="text-[32px] md:text-[40px] font-bold tracking-tight mb-2">Inscription</h1>
+                        <h1 className="text-[32px] md:text-[40px] font-bold tracking-tight mb-2">Connexion</h1>
                         <p className="text-[rgba(55,53,47,0.65)] text-sm px-4">
                             L'espace de travail connecté pour rédiger, planifier et partager. Avec l'IA à vos côtés.
                         </p>
@@ -96,7 +104,7 @@ const Login = () => {
 
                         <button
                             type="submit"
-                            disabled={isLoading}
+                            disabled={isLoading || (password && password.length < 6)}
                             className="w-full h-9 bg-[#2383E2] hover:bg-[#1E71C8] text-white rounded font-medium text-[14px] flex items-center justify-center transition-colors shadow-sm disabled:opacity-50"
                         >
                             {isLoading ? (
@@ -116,7 +124,7 @@ const Login = () => {
                     <div className="w-full space-y-2">
                         <button
                             type="button"
-                            onClick={handleGoogleApple}
+                            onClick={() => handleGoogleApple('Google')}
                             className="w-full h-9 bg-white border border-[rgba(55,53,47,0.16)] hover:bg-[rgba(55,53,47,0.04)] text-[#37352F] rounded font-medium text-[14px] flex items-center justify-center gap-2 transition-colors"
                         >
                             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-4 h-4" />
@@ -125,7 +133,7 @@ const Login = () => {
                         
                         <button
                             type="button"
-                            onClick={handleGoogleApple}
+                            onClick={() => handleGoogleApple('Apple')}
                             className="w-full h-9 bg-white border border-[rgba(55,53,47,0.16)] hover:bg-[rgba(55,53,47,0.04)] text-[#37352F] rounded font-medium text-[14px] flex items-center justify-center gap-2 transition-colors"
                         >
                             <img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" className="w-4 h-4" />

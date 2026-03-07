@@ -100,7 +100,7 @@ const Calendar = () => {
                 allDay: slotInfo.action === 'doubleClick' || slotInfo.action === 'click',
                 resource: { pillar: 'Default' }
             };
-            setEvents([...events, newEvent]);
+            setEvents(prev => [...prev, newEvent]);
         }
     }
 
@@ -108,9 +108,9 @@ const Calendar = () => {
         const action = window.prompt(`Action pour "${event.title}": Taper "supprimer" pour l'effacer, ou entrer un nouveau nom pour renommer.`, event.title);
         
         if (action?.toLowerCase() === 'supprimer') {
-            setEvents(events.filter(e => e.id !== event.id));
+            setEvents(prev => prev.filter(e => e.id !== event.id));
         } else if (action && action !== event.title) {
-            setEvents(events.map(e => e.id === event.id ? { ...e, title: action } : e));
+            setEvents(prev => prev.map(e => e.id === event.id ? { ...e, title: action } : e));
         }
     }
 

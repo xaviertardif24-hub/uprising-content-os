@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, X } from 'lucide-react';
 import { useToast } from './Toaster';
@@ -7,31 +7,68 @@ const InviteModal = ({ isOpen, onClose }) => {
     const [emails, setEmails] = useState(['', '']);
     const [isInviting, setIsInviting] = useState(false);
     const { toast } = useToast();
+    const timeoutRef = useRef(null);
+    const isMounted = useRef(true);
 
-    if (!isOpen) return null;
+    useEffect(() => {
+        isMounted.current = true;
+        return () => {
+            isMounted.current = false;
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, []);
+
+    const handleCopyShareLink = async () => {
+        const shareUrl = window.location.origin + '/join/workspace-123';
+        try {
+            await navigator.clipboard.writeText(shareUrl);
+            toast("Lien de partage copié dans le presse-papiers !", "success");
+        } catch (err) {
+            toast("Échec de la copie du lien.", "error");
+        }
+    };
 
     const handleInvite = () => {
+        const validEmails = emails.filter(email => email.trim() !== '');
+        if (validEmails.length === 0) {
+            toast("Veuillez entrer au moins une adresse e-mail.", "error");
+            return;
+        }
+
         setIsInviting(true);
-        setTimeout(() => {
-            setIsInviting(false);
-            toast("Invitations envoyées avec succès !");
-            onClose();
+        timeoutRef.current = setTimeout(() => {
+            if (isMounted.current) {
+                setIsInviting(false);
+                toast("Invitations envoyées avec succès !");
+                onClose();
+            }
         }, 1500);
+    };
+
+    const updateEmail = (index, value) => {
+        const newEmails = [...emails];
+        newEmails[index] = value;
+        setEmails(newEmails);
     };
 
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white">
-                    <div className="absolute top-4 right-4 cursor-pointer p-2 hover:bg-[rgba(55,53,47,0.08)] rounded-md transition-colors" onClick={onClose}>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white/80 backdrop-blur-sm">
+                    <button 
+                        type="button"
+                        aria-label="Annuler et fermer"
+                        className="absolute top-4 right-4 cursor-pointer p-2 hover:bg-[rgba(55,53,47,0.08)] rounded-md transition-colors" 
+                        onClick={onClose}
+                    >
                         <span className="text-sm font-medium text-[#37352F]">Annuler</span>
-                    </div>
+                    </button>
 
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                        className="w-full max-w-[460px] bg-white text-[#37352F] flex flex-col items-center p-6 pt-12"
+                        className="w-full max-w-[460px] bg-white text-[#37352F] flex flex-col items-center p-6 pt-12 shadow-2xl rounded-xl border border-[rgba(55,53,47,0.09)]"
                     >
                         <div className="text-center w-full mb-8">
                             <h2 className="text-2xl font-bold tracking-tight mb-2">Inviter des collaborateurs</h2>
@@ -43,22 +80,22 @@ const InviteModal = ({ isOpen, onClose }) => {
                         <div className="w-full space-y-4">
                             <div className="flex items-center justify-between">
                                 <label className="text-sm font-medium text-[rgba(55,53,47,0.65)]">Envoyer des invitations</label>
-                                <button className="flex items-center gap-1 text-sm font-medium text-[#2383E2] hover:underline">
+                                <button 
+                                    onClick={handleCopyShareLink}
+                                    className="flex items-center gap-1 text-sm font-medium text-[#2383E2] hover:underline"
+                                >
                                     <Link size={14} />
                                     Obtenir le lien de partage
                                 </button>
                             </div>
 
                             <div className="space-y-2">
-                                <input
-                                    type="email"
-                                    defaultValue="jonsmith.mobbin@gmail.com"
-                                    className="w-full h-9 bg-white border border-[rgba(55,53,47,0.16)] rounded px-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all font-medium"
-                                />
                                 {emails.map((val, i) => (
                                     <input
                                         key={i}
                                         type="email"
+                                        value={val}
+                                        onChange={(e) => updateEmail(i, e.target.value)}
                                         placeholder="Adresse e-mail"
                                         className="w-full h-9 bg-white border border-[rgba(55,53,47,0.16)] rounded px-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all placeholder:text-[rgba(55,53,47,0.4)]"
                                     />

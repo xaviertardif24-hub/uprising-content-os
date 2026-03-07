@@ -24,20 +24,20 @@ const SidebarItem = ({ icon: Icon, label, isActive, onClick, hasChildren = false
                 onClick={handleClick}
                 className={`
           group flex items-center justify-between px-3 py-[6px] rounded-md cursor-pointer transition-colors duration-100
-          ${isActive ? 'bg-[var(--color-notion-bg-active)] font-medium' : 'hover:bg-[var(--color-notion-bg-hover)] text-[var(--color-notion-text-muted)] hover:text-[var(--color-notion-text)]'}
+          ${isActive ? 'bg-notion-bg-active font-medium' : 'hover:bg-notion-bg-hover text-notion-text-muted hover:text-notion-text'}
         `}
             >
                 <div className="flex items-center gap-2 overflow-hidden">
                     {hasChildren && (
                         <div
                             onClick={toggleExpand}
-                            className={`p-0.5 rounded hover:bg-[var(--color-notion-bg-active)] transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                            className={`p-0.5 rounded hover:bg-notion-bg-active transition-transform ${isExpanded ? 'rotate-90' : ''}`}
                         >
                             <ChevronRight size={14} className="text-[var(--color-notion-text-muted)]" />
                         </div>
                     )}
-                    {!hasChildren && <div className="w-[18px]"></div> /* Specer for alignment if no chevron */}
-                    {Icon && <Icon size={16} className={`flex-shrink-0 ${isActive ? 'text-[var(--color-notion-text)]' : ''}`} />}
+                    {!hasChildren && <div className="w-[18px]"></div> /* Spacer for alignment if no chevron */}
+                    {Icon && <Icon size={16} className={`shrink-0 ${isActive ? 'text-notion-text' : ''}`} />}
                     <span className="text-[14px] truncate">{label}</span>
                 </div>
             </div>
@@ -56,7 +56,7 @@ const SidebarItem = ({ icon: Icon, label, isActive, onClick, hasChildren = false
 const SidebarSection = ({ title, children }) => (
     <div className="mb-4">
         {title && (
-            <div className="px-3 pb-1 text-[11px] font-semibold text-[var(--color-notion-text-muted)] hover:text-[var(--color-notion-text)] transition-colors cursor-pointer uppercase tracking-wider group flex items-center justify-between mt-4">
+            <div className="px-3 pb-1 text-[11px] font-semibold text-notion-text-muted hover:text-notion-text transition-colors cursor-pointer uppercase tracking-wider group flex items-center justify-between mt-4">
                 {title}
             </div>
         )}
@@ -66,15 +66,15 @@ const SidebarSection = ({ title, children }) => (
     </div>
 );
 
-const Sidebar = ({ currentPath, onNavigate }) => {
+const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
     const [isInviteOpen, setIsInviteOpen] = useState(false);
 
     return (
         <div className="flex flex-col h-full py-3">
             {/* Workspace Switcher */}
             <div className="px-3 mb-4">
-                <div className="flex items-center gap-2 p-1 hover:bg-[var(--color-notion-bg-hover)] rounded-md cursor-pointer transition-colors">
-                    <div className="w-5 h-5 rounded-[4px] bg-[var(--color-notion-text)] text-[var(--color-notion-bg)] flex items-center justify-center font-bold text-xs">U</div>
+                <div className="flex items-center gap-2 p-1 hover:bg-notion-bg-hover rounded-md cursor-pointer transition-colors">
+                    <div className="w-5 h-5 rounded-[4px] bg-notion-text text-notion-bg flex items-center justify-center font-bold text-xs">U</div>
                     <span className="text-[14px] font-medium truncate flex-1">Uprising Studio</span>
                 </div>
             </div>
@@ -84,7 +84,17 @@ const Sidebar = ({ currentPath, onNavigate }) => {
                 {/* Quick Actions */}
                 <SidebarSection>
                     <SidebarItem icon={Search} label="Recherche" onClick={() => onNavigate('/search')} isActive={currentPath === '/search'} />
-                    <SidebarItem icon={Clock} label="Nouveautés" onClick={() => onNavigate('/updates')} isActive={currentPath === '/updates'} />
+                    <SidebarItem 
+                        icon={Clock} 
+                        label={
+                            <div className="flex items-center justify-between w-full pr-1">
+                                <span>Nouveautés</span>
+                                <span className="bg-[#EB5757] text-white text-[9px] font-bold px-1 rounded-sm h-4 min-w-[16px] flex items-center justify-center">3</span>
+                            </div>
+                        } 
+                        onClick={() => onNavigate('/updates')} 
+                        isActive={currentPath === '/updates'} 
+                    />
                 </SidebarSection>
 
                 {/* Main Navigation */}
@@ -141,9 +151,9 @@ const Sidebar = ({ currentPath, onNavigate }) => {
                 <SidebarSection title="Système">
                     <SidebarItem
                         icon={Settings}
-                        label="Paramètres"
+                        label="Paramètres et membres"
                         isActive={currentPath === '/settings'}
-                        onClick={() => onNavigate('/settings')}
+                        onClick={onOpenSettings}
                     />
                     <SidebarItem
                         icon={UserPlus}

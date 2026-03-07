@@ -3,7 +3,7 @@ import { Star, Wand2 } from 'lucide-react'
 const ContentCard = ({ item, onClick, onGenerateCaptions }) => {
     return (
         <div
-            onClick={() => onClick(item)}
+            onClick={() => onClick?.(item)}
             className="group flex flex-col bg-transparent rounded-md border border-[var(--color-notion-border)] overflow-hidden hover:bg-[var(--color-notion-bg-hover)] transition-colors duration-200 cursor-pointer h-full"
         >
             {/* Thumbnail Area */}

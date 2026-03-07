@@ -5,13 +5,14 @@ import { useToast } from '../components/common/Toaster';
 
 const BlockEditorDemo = () => {
     const { toast } = useToast();
+    const [title, setTitle] = React.useState("Script YouTube : L'IA dans l'Éducation");
 
     const handleSaveDraft = () => {
-        toast("Draft saved successfully!");
+        toast(`Draft "${title}" saved successfully!`);
     };
 
     const handlePublish = () => {
-        toast("Content published successfully!");
+        toast(`Content "${title}" published successfully!`);
     };
 
     return (
@@ -50,8 +51,9 @@ const BlockEditorDemo = () => {
                     contentEditable
                     suppressContentEditableWarning
                     data-placeholder="Titre de la page"
+                    onBlur={(e) => setTitle(e.currentTarget.textContent)}
                 >
-                    Script YouTube : L'IA dans l'Éducation
+                    {title}
                 </h1>
                 
                 <div className="text-[15px] pb-4 mb-6 border-b border-[rgba(55,53,47,0.16)] text-[rgba(55,53,47,0.65)]">

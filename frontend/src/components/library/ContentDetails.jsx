@@ -16,7 +16,7 @@ const ContentDetails = ({ item, isOpen, onClose, onGenerateCaptions }) => {
 
     const handleEdit = () => {
         onClose();
-        navigate('/editor');
+        navigate(`/editor/${item.id}`);
     }
 
     return (
@@ -45,6 +45,7 @@ const ContentDetails = ({ item, isOpen, onClose, onGenerateCaptions }) => {
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
                                     <button
                                         onClick={onClose}
+                                        aria-label="Fermer les détails du contenu"
                                         className="absolute right-6 top-6 p-2 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 transition-all border border-white/10"
                                     >
                                         <X size={24} />

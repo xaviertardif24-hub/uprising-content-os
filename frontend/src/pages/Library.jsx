@@ -1,71 +1,123 @@
-import React from 'react';
-import { Sparkles, TrendingUp, Search, Home, Users, Settings, FileText, Network, BookOpen, Link2, CopyCheck, Tag } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { 
+    Search, 
+    Plus, 
+    History, 
+    Star, 
+    Users, 
+    Lock, 
+    ChevronRight, 
+    Home, 
+    Globe,
+    LayoutGrid
+} from 'lucide-react';
+import { useToast } from '../components/common/Toaster';
 
 const Library = () => {
-    const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState('Espaces d\'équipe');
+    const { toast } = useToast();
+
+    const tabs = [
+        { id: 'Espaces d\'équipe', icon: LayoutGrid },
+        { id: 'Récentes', icon: History },
+        { id: 'Favoris', icon: Star },
+        { id: 'Partagées', icon: Users },
+        { id: 'Pages privées', icon: Lock },
+    ];
 
     return (
-        <div className="h-full animate-in fade-in duration-500 overflow-y-auto px-6 py-10 lg:px-16 max-w-[1100px] mx-auto">
-            {/* The top bar in the screenshot is handled by MainLayoutNotion, here we just show the content */}
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
-                {/* Column 1: Suggéré pour vous */}
-                <div>
-                    <div className="flex items-center gap-2 text-[var(--color-notion-text-muted)] mb-4 px-2">
-                        <Sparkles size={16} strokeWidth={1.5} />
-                        <h3 className="text-[13px] font-medium">Suggéré pour vous</h3>
+        <div className="h-full animate-in fade-in duration-500 overflow-y-auto bg-notion-bg px-16 py-16 max-w-[1400px] mx-auto">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8">
+                <h1 className="text-[32px] font-bold text-notion-text tracking-tight">Bibliothèque</h1>
+                <button className="bg-[#2383E2] hover:bg-[#0077D4] text-white text-[14px] font-semibold px-4 py-1.5 rounded-md shadow-sm transition-colors flex items-center">
+                    Nouvel espace d'équipe
+                </button>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex items-center justify-between mb-2 border-b border-[rgba(55,53,47,0.09)]">
+                <div className="flex items-center gap-1">
+                    {tabs.map((tab) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`flex items-center gap-2 px-3 py-2 text-[14px] font-medium transition-colors relative group ${
+                                activeTab === tab.id 
+                                ? 'text-notion-text' 
+                                : 'text-notion-text-muted hover:bg-[rgba(55,53,47,0.04)]'
+                            }`}
+                        >
+                            <tab.icon size={16} strokeWidth={2} />
+                            {tab.id}
+                            {activeTab === tab.id && (
+                                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#37352F]"></div>
+                            )}
+                        </button>
+                    ))}
+                </div>
+                <div className="p-2 text-notion-text-muted hover:bg-[rgba(55,53,47,0.04)] rounded cursor-pointer transition-colors">
+                    <Search size={16} />
+                </div>
+            </div>
+
+            {/* Table */}
+            <div className="w-full mt-4">
+                {/* Table Headers */}
+                <div className="grid grid-cols-[1.5fr_1fr_0.5fr_0.5fr] px-2 py-2 text-[12px] font-medium text-notion-text-meta uppercase tracking-wider border-b border-[rgba(55,53,47,0.09)]">
+                    <div className="flex items-center gap-2">
+                        <LayoutGrid size={14} className="opacity-0" /> {/* Placeholder spacing */}
+                        Nom
                     </div>
-                    <div className="space-y-0.5">
-                        <HoverItem icon={FileText} label="Content" onClick={() => navigate('/editor')} />
-                        <HoverItem icon={Search} label="App" />
-                        <HoverItem icon={Home} label="Home" onClick={() => navigate('/dashboard')} />
-                        <HoverItem icon={Network} label="Flow" />
-                        <HoverItem icon={BookOpen} label="Curator" />
-                        <HoverItem icon={Users} label="People" />
-                        <HoverItem icon={Settings} label="Tools" onClick={() => navigate('/settings')} />
+                    <div className="flex items-center gap-2">
+                        {/* Placeholder text for Description header matches screenshot aspect */}
+                        <span className="flex items-center gap-2">
+                             <div className="w-4 h-0.5 bg-notion-text-meta opacity-40"></div>
+                             Description
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Users size={14} />
+                        Accès
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Users size={14} />
+                        Membres
                     </div>
                 </div>
 
-                {/* Column 2: Tendances */}
-                <div>
-                    <div className="flex items-center gap-2 text-[var(--color-notion-text-muted)] mb-4 px-2">
-                        <TrendingUp size={16} strokeWidth={1.5} />
-                        <h3 className="text-[13px] font-medium">Tendances</h3>
+                {/* Table Row: Agence Uprising Studio */}
+                <div 
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => toast("Ouverture de l'espace d'équipe")}
+                    onKeyDown={(e) => e.key === 'Enter' && toast("Ouverture de l'espace d'équipe")}
+                    className="grid grid-cols-[1.5fr_1fr_0.5fr_0.5fr] px-2 py-3 text-[14px] group hover:bg-[rgba(55,53,47,0.03)] cursor-pointer rounded-lg transition-colors border-b border-[rgba(55,53,47,0.03)] items-center"
+                >
+                    <div className="flex items-center gap-2">
+                        <ChevronRight size={16} className="text-notion-text-muted" />
+                        <div className="p-1 rounded bg-[rgba(55,53,47,0.04)]">
+                            <Home size={16} className="text-notion-text" />
+                        </div>
+                        <span className="font-bold text-notion-text">Agence Uprising Studio</span>
                     </div>
-                    <div className="space-y-0.5">
-                        <HoverItem icon={BookOpen} label="Curator" />
-                        <HoverItem icon={Network} label="Flow" />
-                        <HoverItem icon={FileText} label="Compensation review policy" />
-                        <HoverItem icon={Link2} label="Hyperlink" />
-                        <HoverItem icon={CopyCheck} label="Toggle Button & Group" />
-                        <HoverItem icon={FileText} label="Weekly sync @Tuesday" />
-                        <HoverItem icon={FileText} label="Label" />
+                    <div>
+                        <span className="text-notion-text-muted italic text-xs">Aucune description</span>
                     </div>
-                </div>
-
-                {/* Column 3: Dans M Uprising Studio */}
-                <div>
-                    <div className="flex items-center gap-2 text-[var(--color-notion-text-muted)] mb-4 px-2">
-                        <h3 className="text-[13px] font-medium">Dans M Uprising Studio</h3>
+                    <div className="flex items-center gap-1.5">
+                        <Globe size={14} className="text-notion-text-muted" />
+                        <span className="text-notion-text">Par défaut</span>
                     </div>
-                    <div className="space-y-0.5 text-sm text-[var(--color-notion-text-muted)] px-2">
-                        {/* Area is empty in the screenshot, but we add a placeholder for realism or keep it blank */}
+                    <div className="flex items-center -space-x-1.5">
+                        <div className="w-5 h-5 rounded-full bg-linear-to-br from-blue-500 to-purple-600 flex justify-center items-center font-semibold text-white text-[10px] border border-white z-10" title="Jane Smith">
+                            J
+                        </div>
+                        <img src="https://i.pravatar.cc/100?img=11" alt="Alexandre Dupont" className="w-5 h-5 rounded-full border border-white z-0" title="Alexandre Dupont" />
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
-const HoverItem = ({ icon: Icon, label, onClick }) => (
-    <div 
-        onClick={onClick}
-        className="flex items-center gap-3 px-2 py-1 rounded-md cursor-pointer hover:bg-[var(--color-notion-bg-hover)] transition-colors text-[var(--color-notion-text)]"
-    >
-        <Icon size={16} className="text-[var(--color-notion-text-muted)]" strokeWidth={1.5} />
-        <span className="text-[14px] font-medium">{label}</span>
-    </div>
-);
 
 export default Library;

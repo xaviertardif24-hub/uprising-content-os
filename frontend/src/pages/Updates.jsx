@@ -2,93 +2,105 @@ import React from 'react';
 import { GitCommit, Star, RefreshCw } from 'lucide-react';
 
 const Updates = () => {
+    const getRelativeDate = (date) => {
+        const diff = new Date() - new Date(date);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        if (days === 0) return "Aujourd'hui";
+        if (days === 1) return "Hier";
+        if (days < 30) return `Il y a ${days} jours`;
+        return "Mois dernier";
+    };
+
     const changelog = [
         {
-            date: "Aujourd'hui",
-            version: "v1.5.0",
-            title: "Mise à jour de l'interface & Nouveautés",
+            date: new Date().toISOString(),
+            version: "v1.6.0",
+            title: "Interface Royale & IA Chatbot",
             changes: [
-                "Refonte complète de l'interface utilisateur pour correspondre parfaitement au style minimaliste de Notion",
-                "Ajout de la page 'Nouveautés' pour suivre les mises à jour du projet",
-                "Ajout de la page 'Recherche' avec un système de saisie et d'historique",
-                "Correction du positionnement du menu de commandes (le menu à la barre oblique '/') dans l'éditeur",
-                "Traduction complète de l'application en français",
-                "Amélioration de la modale d'invitation avec simulation d'envoi et notifications"
+                "Implémentation du chatbot 'Royal AI' (icône Roi) avec suggestions intelligentes",
+                "Conversion de la page Paramètres en une fenêtre modale immersive",
+                "Nouvelle vue 'Espaces d'équipe' pour la Bibliothèque (layout en tableau)",
+                "Support du mode plein écran via le bouton de réduction de la barre latérale",
+                "Ajout de badges de notification ('3') dynamiques dans la navigation",
+                "Correction du bug de rotation infinie sur l'invitation des membres"
             ],
             isNew: true
         },
         {
-            date: "La semaine dernière",
-            version: "v1.4.2",
-            title: "Améliorations de l'éditeur de contenu",
+            date: new Date(Date.now() - 86400000).toISOString(),
+            version: "v1.5.0",
+            title: "Mise à jour de l'interface & Nouveautés",
             changes: [
-                "Ajout d'une fonctionnalité pour simuler la sauvegarde et la publication d'articles",
-                "Mise en place de toasts de notification pour informer l'utilisateur de l'état de l'action",
-                "Redirection depuis la zone Bibliothèque vers l'éditeur maintenant fonctionnelle",
-                "Ajout du bouton 'Éditer' dans les détails de contenu permettant de sauter à l'éditeur"
+                "Refonte complète de l'interface utilisateur pour correspondre parfaitement au style minimaliste de l'application",
+                "Ajout de la page 'Nouveautés' pour suivre les mises à jour du projet",
+                "Ajout de la page 'Recherche' avec un système de saisie et d'historique",
+                "Correction du positionnement du menu de commandes (le menu à la barre oblique '/') dans l'éditeur",
+                "Traduction complète de l'application en français"
             ],
             isNew: false
         },
         {
-            date: "Mois dernier",
+            date: new Date(Date.now() - 2592000000).toISOString(),
             version: "v1.0.0",
             title: "Lancement de la version initiale",
             changes: [
                 "Initialisation du système Content-OS Uprising",
                 "Mise en place du tableau de bord avec compteurs et statistiques",
-                "Création du répertoire de création de contenu",
-                "Implémentation du système d'authentification de base"
+                "Création du répertoire de création de contenu"
             ],
             isNew: false
         }
     ];
 
     return (
-        <div className="h-full animate-in fade-in duration-500 overflow-y-auto px-6 py-12 lg:px-12 max-w-[800px] mx-auto">
-            <div className="flex items-end justify-between mb-10 pb-4 border-b border-[rgba(55,53,47,0.16)]">
+        <div className="h-full animate-in fade-in duration-500 overflow-y-auto px-8 py-16 lg:px-20 max-w-[900px] mx-auto text-[#37352F]">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                 <div>
-                    <h1 className="text-3xl font-semibold text-[var(--color-notion-text)] tracking-tight">Nouveautés</h1>
-                    <p className="text-[var(--color-notion-text-muted)] text-sm mt-2">
-                        Historique des mises à jour et nouvelles fonctionnalités de Content-OS
+                    <h1 className="text-4xl font-bold text-notion-text tracking-tight">Nouveautés</h1>
+                    <p className="text-notion-text-muted text-base mt-2">
+                        Découvrez les dernières améliorations et fonctionnalités de Content-OS
                     </p>
                 </div>
-                <div className="flex gap-2">
-                    <button className="flex items-center gap-1.5 text-xs text-[var(--color-notion-text-muted)] hover:text-[#37352F] hover:bg-[rgba(55,53,47,0.08)] px-2 py-1 rounded transition-colors">
-                        <RefreshCw size={14} /> Vérifier les mises à jour
+                <div>
+                    <button 
+                        onClick={() => window.location.reload()}
+                        className="flex items-center gap-2 text-sm text-notion-text-muted hover:text-notion-text hover:bg-notion-bg-hover px-3 py-1.5 rounded-lg transition-colors border border-transparent hover:border-notion-border"
+                    >
+                        <RefreshCw size={16} /> Vérifier les mises à jour
                     </button>
                 </div>
             </div>
 
-            <div className="space-y-12 relative before:absolute before:inset-0 before:ml-4 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent">
+            <div className="space-y-12">
                 {changelog.map((release, index) => (
-                    <div key={index} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                        {/* Timeline dot */}
-                        <div className="flex items-center justify-center w-8 h-8 rounded-full border-4 border-white bg-[#2383E2] text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:left-1/2 z-10">
-                            {release.isNew ? <Star size={12} className="fill-white" /> : <GitCommit size={14} />}
+                    <div key={index} className="flex flex-col md:flex-row gap-6 md:gap-12 group">
+                        {/* Version & Date Column */}
+                        <div className="md:w-1/4 shrink-0 pt-1">
+                            <div className="sticky top-20">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="text-sm font-bold px-2.5 py-1 bg-[rgba(55,53,47,0.06)] text-[rgba(55,53,47,0.65)] rounded-md">
+                                        {release.version}
+                                    </span>
+                                    {release.isNew && (
+                                        <span className="text-xs font-bold px-2 py-1 bg-blue-100 text-blue-700 rounded-md flex items-center gap-1">
+                                            <Star size={12} className="fill-blue-700" />
+                                            RÉCENT
+                                        </span>
+                                    )}
+                                </div>
+                                <span className="text-sm text-notion-text-meta font-medium">{getRelativeDate(release.date)}</span>
+                            </div>
                         </div>
 
-                        {/* Content Card */}
-                        <div className="w-[calc(100%-3rem)] md:w-[calc(50%-2rem)] pl-4 md:pl-0 md:group-even:pr-8 md:group-odd:pl-8">
-                            <div className="p-5 bg-white border border-[rgba(55,53,47,0.16)] shadow-[0_2px_4px_rgba(0,0,0,0.02)] rounded-xl transition-shadow hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-xs font-bold px-2 py-0.5 bg-[rgba(55,53,47,0.06)] text-[rgba(55,53,47,0.65)] rounded">
-                                            {release.version}
-                                        </span>
-                                        {release.isNew && (
-                                            <span className="text-[10px] font-bold px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded-sm uppercase tracking-wider">
-                                                RÉCENT
-                                            </span>
-                                        )}
-                                    </div>
-                                    <span className="text-xs text-[var(--color-notion-text-meta)]">{release.date}</span>
-                                </div>
-                                <h3 className="text-base font-bold text-[var(--color-notion-text)] mb-3">{release.title}</h3>
-                                <ul className="space-y-2 text-sm text-[rgba(55,53,47,0.8)]">
+                        {/* Content Column */}
+                        <div className="md:w-3/4">
+                            <div className="pb-12 border-b border-notion-border group-last:border-0 group-last:pb-0">
+                                <h3 className="text-2xl font-semibold text-notion-text mb-6">{release.title}</h3>
+                                <ul className="space-y-4">
                                     {release.changes.map((change, i) => (
-                                        <li key={i} className="flex items-start gap-2 relative pl-4">
-                                            <span className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-[#2383E2] rounded-full opacity-60"></span>
-                                            {change}
+                                        <li key={i} className="flex items-start gap-4 text-base text-[rgba(55,53,47,0.8)] leading-relaxed">
+                                            <div className="mt-2 w-1.5 h-1.5 bg-[#2383E2] rounded-full shrink-0"></div>
+                                            <span>{change}</span>
                                         </li>
                                     ))}
                                 </ul>
