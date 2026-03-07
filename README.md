@@ -17,7 +17,6 @@ To reduce content production time by 70% while maintaining brand voice and quali
 - **Backend**: FastAPI server setup with CORS and basic health check endpoints.
 - **Frontend**: Vite + React project initialized with TailwindCSS and basic routing.
 - **Documentation**: Established PRD, SOP, and [Task Breakdown](file:///c:/Users/xavie/OneDrive/Desktop/Contrat%20Olivier/Document%20Olivier/docs/task-breakdown.md).
-- **Stratégie & Planning**: Centralisé dans le dossier [STRATEGIE-EQUIPE](file:///c:/Users/xavie/OneDrive/Desktop/Contrat%20Olivier/Document%20Olivier/STRATEGIE-EQUIPE/MASTER-PLAN.md). Contient le plan de match global, le plan Xavier Phase 2 et les instructions DevOps.
 
 ## Roadmap & Status
 - [x] Initial Repository Setup
