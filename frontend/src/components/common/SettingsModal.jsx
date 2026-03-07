@@ -26,23 +26,18 @@ const SettingsModal = ({ isOpen, onClose }) => {
         { section: 'Compte', items: [
             { id: 'Compte', label: 'Uprising Studio', icon: User },
             { id: 'Préférences', label: 'Préférences', icon: Settings },
-            { id: 'Notifications', label: 'Notifications', icon: Bell },
-            { id: 'Connexions', label: 'Connexions', icon: LinkIcon },
         ]},
         { section: 'Espace de travail', items: [
-            { id: 'Général', label: 'Général', icon: Settings },
             { id: 'Personnes', label: 'Personnes', icon: Users },
-            { id: 'Importer', label: 'Importer', icon: Download },
         ]},
         { section: 'Fonctionnalités', items: [
-            { id: 'IA de Notion', label: 'IA de Notion', icon: Sparkles },
+            { id: 'IA', label: 'Intelligence Artificielle', icon: Sparkles },
             { id: 'Pages publiques', label: 'Pages publiques', icon: Globe },
             { id: 'Émoji', label: 'Émoji', icon: Smile },
             { id: 'Hors ligne', label: 'Hors ligne', icon: WifiOff },
         ]},
         { section: 'Administrateur', items: [
             { id: 'Espaces d\'équipe', label: 'Espaces d\'équipe', icon: Monitor },
-            { id: 'Sécurité', label: 'Sécurité', icon: Shield },
             { id: 'Identité', label: 'Identité', icon: Fingerprint },
         ]}
     ];

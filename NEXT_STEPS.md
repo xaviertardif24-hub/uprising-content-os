@@ -1,33 +1,36 @@
-﻿# Next Steps : Content OS Backend & Frontend
+﻿# Next Steps & Future Implementations
 
-Voici les prochaines étapes de développement, basées sur l'état actuel et le plan d'architecture (docs/architecture.md).
+Ce document liste les fonctionnalités qui ont été planifiées mais temporairement masquées du MVP (Minimum Viable Product) afin de garantir une expérience utilisateur (UX) claire et sans confusion. Elles devront être implémentées dans les futures versions.
 
-## 1. Fondation Backend (FastAPI + Supabase)
-- Objectif : Mettre en place la base de données et l'API principale.
-- Tâches :
-  - Créer le projet Supabase et récupérer les identifiants (DATABASE_URL).
-  - Implémenter les modèles SQLAlchemy (User, ContentItem, PublishingQueue, etc.).
-  - Configurer Alembic et exécuter la première migration.
-  - Implémenter l'authentification JWT (Login/Register).
-  - Créer les endpoints CRUD de base pour les content_items.
+## Fonctionnalités Frontend à implémenter
+1. **Notifications (Menu & Settings)** : 
+   - Centre de notifications complet (pour l'instant, le bouton avec le badge '3' a été masqué ou simplifié).
+   - Préférences de notifications dans les paramètres.
+2. **Menu "Partager" (Top Bar)** :
+   - Fonctionnalité de génération de lien public ou d'invitation directe à un document spécifique.
+3. **Paramètres "Général" et "Sécurité"** :
+   - Gestion avancée de l'espace de travail (renommage, icône de l'espace, domaine personnalisé).
+   - Accès administrateur (SAML, SSO, logs d'audit).
+4. **Intégrations / Connexions** :
+   - Connexion avec d'autres outils (Google Drive, Slack, GitHub, etc.).
+5. **Import / Export** :
+   - Outil d'importation depuis Notion, Evernote, Confluence, HTML, Markdown.
+   - Export CSV, PDF, Markdown.
+6. **Raccourcis Clavier Avancés** :
+   - Support de Cmd+S (Save), Cmd+Enter (Publish), etc.
+7. **Barre de Progression de Chargement** : 
+   - Indication visuelle globale en haut de la page lors du chargement ou de la sauvegarde d'un contenu.
+8. **Dark Mode Toggle Rapide** : 
+   - Raccourci dans la barre supérieure pour changer le mode.
 
-## 2. Intégration Google Drive
-- Objectif : Permettre la synchronisation des fichiers vidéo/audio.
-- Tâches :
-  - Mettre en place le flux OAuth2 Google Drive.
-  - Créer l'endpoint pour lister et récupérer les fichiers d'un dossier cible.
-  - Sauvegarder les métadonnées des fichiers synchronisés dans content_items.
-
-## 3. Pipeline IA (Transcription & Analyse)
-- Objectif : Automatiser l'extraction et l'analyse du contenu.
-- Tâches :
-  - Implémenter le service Whisper (OpenAI) pour la transcription audio.
-  - Implémenter les appels GPT pour la catégorisation (Piliers) et le Scoring (Hook, Clarity).
-  - Mettre en place le système de tâches en arrière-plan (BackgroundTasks ou Celery).
-
-## 4. Frontend : Éditeur et Liaison API
-- Objectif : Finaliser l'UI et la connecter au vrai backend.
-- Tâches :
-  - Connecter la page de Login au vrai endpoint d'authentification.
-  - Implémenter le Drag & Drop réel dans le BlockEditor.
-  - Fetcher les vraies données depuis l'API pour le Tableau de Bord (Dashboard) et la Librairie (Library).
+## Spécifications Backend à implémenter
+1. **API de Notifications / Webhooks** :
+   - Pour les événements importants (mention, tâche assignée).
+2. **Rate Limiting** :
+   - Implémentation d'une protection contre les abus de requêtes API (ex: création d'idées, IA).
+3. **Audit Log Complet** :
+   - Tracer les accès, les suppressions et les modifications.
+4. **Système de Caching Avancé** :
+   - Utilisation de Redis pour le dashboard et les listes (Ideas, Library).
+5. **Documentation d'API Publique** :
+   - Fournir un Swagger/OpenAPI pour les intégrations tierces.

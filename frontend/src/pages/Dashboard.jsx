@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../components/common/Toaster'
+import { useNavigate } from 'react-router-dom'
 
 const RECENTLY_VISITED = [
     { title: 'Example PRD', icon: FileText, date: 'J Feb 21', color: 'text-blue-500' },
@@ -46,6 +47,7 @@ const TRENDING = [
 const Dashboard = () => {
     const { user } = useAuth()
     const { toast } = useToast()
+    const navigate = useNavigate()
     const userName = user?.name || 'Jane Smith' // Fallback for matching image exactly
     
     return (
@@ -73,6 +75,7 @@ const Dashboard = () => {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.2, delay: idx * 0.05 }}
+                                onClick={() => navigate('/editor')}
                                 className="group shrink-0 w-[140px] h-[100px] border border-[rgba(55,53,47,0.16)] rounded-lg p-3 flex flex-col justify-between hover:bg-[rgba(55,53,47,0.04)] cursor-pointer transition-colors shadow-sm"
                             >
                                 <div className={`${item.color}`}>

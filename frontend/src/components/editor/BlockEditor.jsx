@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { GripVertical, Plus } from 'lucide-react';
+import { GripVertical, Plus, ArrowUp, ArrowDown } from 'lucide-react';
 import SlashMenu from './SlashMenu';
 
-const Block = ({ id, content, type, onUpdate, onAdd, onRemove, onFocusNext, autoFocus, onTypeChange }) => {
+const Block = ({ id, content, type, onUpdate, onAdd, onRemove, onFocusNext, autoFocus, onTypeChange, onMove }) => {
     const inputRef = useRef(null);
     const [slashMenuOpen, setSlashMenuOpen] = useState(false);
     const [slashFilter, setSlashFilter] = useState('');
@@ -102,22 +102,32 @@ const Block = ({ id, content, type, onUpdate, onAdd, onRemove, onFocusNext, auto
     };
 
     return (
-        <div className="group flex items-start gap-1 py-1 -ml-6 relative">
-            {/* Actions (Grip & Plus) */}
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center absolute left-0 top-1/2 -translate-y-1/2 mt-1">
+        <div className="group flex items-start gap-1 py-1 -ml-8 pl-1 relative">
+            {/* Actions (Arrows & Plus) */}
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center absolute left-0 top-0 mt-1.5 space-y-0.5">
                 <button
-                    className="p-1 text-[var(--color-notion-text-muted)] hover:bg-[var(--color-notion-bg-hover)] rounded cursor-pointer"
+                    className="p-0.5 text-notion-text-muted hover:bg-notion-bg-hover hover:text-notion-text rounded cursor-pointer"
                     onClick={() => onAdd(id)}
                     title="Ajouter un bloc en dessous"
                 >
-                    <Plus size={16} />
+                    <Plus size={14} />
                 </button>
-                <button
-                    className="p-1 text-[var(--color-notion-text-muted)] hover:bg-[var(--color-notion-bg-hover)] rounded cursor-grab active:cursor-grabbing"
-                    title="Déplacer"
-                >
-                    <GripVertical size={16} />
-                </button>
+                <div className="flex bg-notion-bg-hover/60 rounded overflow-hidden">
+                    <button
+                        className="p-0.5 text-notion-text-muted hover:bg-[#d8d8d8] dark:hover:bg-[#333] hover:text-notion-text cursor-pointer transition-colors"
+                        onClick={() => onMove(id, 'up')}
+                        title="Décale vers le haut"
+                    >
+                        <ArrowUp size={12} strokeWidth={2.5} />
+                    </button>
+                    <button
+                        className="p-0.5 text-notion-text-muted hover:bg-[#d8d8d8] dark:hover:bg-[#333] hover:text-notion-text cursor-pointer transition-colors"
+                        onClick={() => onMove(id, 'down')}
+                        title="Décale vers le bas"
+                    >
+                        <ArrowDown size={12} strokeWidth={2.5} />
+                    </button>
+                </div>
             </div>
 
             {/* Editable Zone */}
@@ -150,6 +160,23 @@ const BlockEditor = () => {
         { id: '1', type: 'text', content: '' }
     ]);
     const [focusedBlockId, setFocusedBlockId] = useState('1');
+
+    const handleMoveBlock = (id, direction) => {
+        const index = blocks.findIndex(b => b.id === id);
+        if (direction === 'up' && index > 0) {
+            const newBlocks = [...blocks];
+            const temp = newBlocks[index];
+            newBlocks[index] = newBlocks[index - 1];
+            newBlocks[index - 1] = temp;
+            setBlocks(newBlocks);
+        } else if (direction === 'down' && index < blocks.length - 1) {
+            const newBlocks = [...blocks];
+            const temp = newBlocks[index];
+            newBlocks[index] = newBlocks[index + 1];
+            newBlocks[index + 1] = temp;
+            setBlocks(newBlocks);
+        }
+    };
 
     const handleUpdateBlock = (id, newContent) => {
         setBlocks(blocks.map(b => b.id === id ? { ...b, content: newContent } : b));
@@ -214,6 +241,7 @@ const BlockEditor = () => {
                         onRemove={handleRemoveBlock}
                         onFocusNext={handleFocusNext}
                         onTypeChange={handleTypeChange}
+                        onMove={handleMoveBlock}
                         autoFocus={focusedBlockId === block.id}
                     />
                 ))}

@@ -1,7 +1,9 @@
 import React from 'react';
 import { MoreHorizontal, Star, Share, Clock, PanelLeft } from 'lucide-react';
+import { useToast } from '../common/Toaster';
 
 const PageTopbar = ({ title, breadcrumbs, onToggleSidebar, isSidebarCollapsed }) => {
+    const { toast } = useToast();
     return (
         <div className="h-14 border-b border-notion-border flex items-center justify-between px-6 sticky top-0 bg-notion-bg z-10 transition-all">
             {/* Breadcrumbs Left */}
@@ -35,16 +37,19 @@ const PageTopbar = ({ title, breadcrumbs, onToggleSidebar, isSidebarCollapsed })
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <span className="text-[13px] hover:bg-notion-bg-hover px-2 py-1 rounded cursor-pointer transition-colors text-notion-text mr-2">
+                    <span 
+                        onClick={() => toast("Le partage sera bientôt disponible ! 🚀")}
+                        className="text-[13px] hover:bg-notion-bg-hover px-2 py-1 rounded cursor-pointer transition-colors text-notion-text mr-2"
+                    >
                         Partager
                     </span>
-                    <div title="Partager" className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
+                    <div title="Partager" onClick={() => toast("Le partage sera bientôt disponible ! 🚀")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
                         <Share size={16} strokeWidth={1.5} />
                     </div>
-                    <div title="Mises à jour" className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
+                    <div title="Mises à jour" onClick={() => toast("Les notifications seront bientôt disponibles ! 🚀")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
                         <Clock size={16} strokeWidth={1.5} />
                     </div>
-                    <div title="Favoris" className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
+                    <div title="Favoris" onClick={() => toast("Ajouté aux favoris ! ⭐")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
                         <Star size={16} strokeWidth={1.5} />
                     </div>
                     <div title="Plus" className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors ml-1">
