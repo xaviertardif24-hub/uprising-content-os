@@ -12,13 +12,17 @@ To reduce content production time by 70% while maintaining brand voice and quali
 - **Ideas Bank**: Extract content ideas from client call transcripts.
 - **Google Drive Integration**: Seamless sync with existing folder structures.
 
-## Structure
-- `docs/`: Project documentation and requirements.
-- `prototypes/`: AI prompts and test results.
-- `backend/`: FastAPI server and AI logic.
-- `frontend/`: React + Vite dashboard.
+## Recent Modifications (2026-03-06)
+- **Infrastructure**: Initialized repository structure with `backend/`, `frontend/`, `docs/`, and `prototypes/`.
+- **Backend**: FastAPI server setup with CORS and basic health check endpoints.
+- **Frontend**: Vite + React project initialized with TailwindCSS and basic routing.
+- **Documentation**: Established PRD, SOP, and Task Breakdown in `docs/`.
+- **DevOps**: Automated Git synchronization and daily update reporting initiated.
 
-## Tech Stack
-- **Frontend**: React, TailwindCSS, Zustand, React Router.
-- **Backend**: FastAPI, SQLAlchemy, PostgreSQL (Supabase).
-- **AI**: OpenAI GPT-4, Whisper API.
+## Roadmap & Status
+- [x] Initial Repository Setup
+- [x] Architecture & Documentation (v1)
+- [/] Backend Core (Auth, Database Schema)
+- [/] Frontend Core (Design System, Auth Context)
+- [ ] AI Integration (Categorization, Scoring)
+- [ ] Google Drive Integration
