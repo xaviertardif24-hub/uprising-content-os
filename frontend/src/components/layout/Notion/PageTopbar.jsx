@@ -1,6 +1,6 @@
 import React from 'react';
 import { MoreHorizontal, Star, Share, Clock, PanelLeft } from 'lucide-react';
-import { useToast } from '../common/Toaster';
+import { useToast } from '../../common/Toaster';
 
 const PageTopbar = ({ title, breadcrumbs, onToggleSidebar, isSidebarCollapsed }) => {
     const { toast } = useToast();
