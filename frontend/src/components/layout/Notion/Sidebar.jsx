@@ -1,18 +1,27 @@
-import React from 'react';
-import { ChevronRight, Search, Clock, Settings, LayoutDashboard, Library, Calendar, Lightbulb, Edit3 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronRight, Search, Clock, Settings, LayoutDashboard, Library, Calendar, Lightbulb, Edit3, UserPlus, Grid } from 'lucide-react';
+import InviteModal from '../../common/InviteModal';
 
-const SidebarItem = ({ icon: Icon, label, isActive, onClick, hasChildren = false, childrenItems = [] }) => {
-    const [isExpanded, setIsExpanded] = React.useState(false);
+const SidebarItem = ({ icon: Icon, label, isActive, onClick, hasChildren = false, childrenItems = [], defaultExpanded = false }) => {
+    const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
     const toggleExpand = (e) => {
         e.stopPropagation();
         setIsExpanded(!isExpanded);
     };
 
+    const handleClick = (e) => {
+        if (onClick) {
+            onClick(e);
+        } else if (hasChildren) {
+            toggleExpand(e);
+        }
+    };
+
     return (
         <div className="flex flex-col">
             <div
-                onClick={onClick}
+                onClick={handleClick}
                 className={`
           group flex items-center justify-between px-3 py-[6px] rounded-md cursor-pointer transition-colors duration-100
           ${isActive ? 'bg-[var(--color-notion-bg-active)] font-medium' : 'hover:bg-[var(--color-notion-bg-hover)] text-[var(--color-notion-text-muted)] hover:text-[var(--color-notion-text)]'}
@@ -27,14 +36,14 @@ const SidebarItem = ({ icon: Icon, label, isActive, onClick, hasChildren = false
                             <ChevronRight size={14} className="text-[var(--color-notion-text-muted)]" />
                         </div>
                     )}
+                    {!hasChildren && <div className="w-[18px]"></div> /* Specer for alignment if no chevron */}
                     {Icon && <Icon size={16} className={`flex-shrink-0 ${isActive ? 'text-[var(--color-notion-text)]' : ''}`} />}
                     <span className="text-[14px] truncate">{label}</span>
                 </div>
             </div>
 
-            {/* Children rendering */}
             {hasChildren && isExpanded && (
-                <div className="pl-6 space-y-[1px]">
+                <div className="pl-4 space-y-[1px]">
                     {childrenItems.map((child, idx) => (
                         <SidebarItem key={idx} {...child} />
                     ))}
@@ -47,7 +56,7 @@ const SidebarItem = ({ icon: Icon, label, isActive, onClick, hasChildren = false
 const SidebarSection = ({ title, children }) => (
     <div className="mb-4">
         {title && (
-            <div className="px-3 pb-1 text-[11px] font-semibold text-[var(--color-notion-text-muted)] hover:text-[var(--color-notion-text)] transition-colors cursor-pointer uppercase tracking-wider group flex items-center justify-between">
+            <div className="px-3 pb-1 text-[11px] font-semibold text-[var(--color-notion-text-muted)] hover:text-[var(--color-notion-text)] transition-colors cursor-pointer uppercase tracking-wider group flex items-center justify-between mt-4">
                 {title}
             </div>
         )}
@@ -58,14 +67,15 @@ const SidebarSection = ({ title, children }) => (
 );
 
 const Sidebar = ({ currentPath, onNavigate }) => {
+    const [isInviteOpen, setIsInviteOpen] = useState(false);
+
     return (
         <div className="flex flex-col h-full py-3">
-            {/* Workspace Switcher Component Mock */}
+            {/* Workspace Switcher */}
             <div className="px-3 mb-4">
                 <div className="flex items-center gap-2 p-1 hover:bg-[var(--color-notion-bg-hover)] rounded-md cursor-pointer transition-colors">
                     <div className="w-5 h-5 rounded-[4px] bg-[var(--color-notion-text)] text-[var(--color-notion-bg)] flex items-center justify-center font-bold text-xs">U</div>
                     <span className="text-[14px] font-medium truncate flex-1">Uprising Studio</span>
-                    <div className="text-[10px] bg-[var(--color-notion-border)] px-1.5 rounded text-[var(--color-notion-text-muted)]">Free</div>
                 </div>
             </div>
 
@@ -73,45 +83,77 @@ const Sidebar = ({ currentPath, onNavigate }) => {
 
                 {/* Quick Actions */}
                 <SidebarSection>
-                    <SidebarItem icon={Search} label="Search" />
-                    <SidebarItem icon={Clock} label="Updates" />
-                    <SidebarItem icon={Settings} label="Settings & members" />
+                    <SidebarItem icon={Search} label="Recherche" onClick={() => onNavigate('/search')} isActive={currentPath === '/search'} />
+                    <SidebarItem icon={Clock} label="Nouveautés" onClick={() => onNavigate('/updates')} isActive={currentPath === '/updates'} />
                 </SidebarSection>
 
-                {/* Main Navigation Workspace */}
-                <SidebarSection title="Workspace">
+                {/* Main Navigation */}
+                <SidebarSection title="Espaces d'équipe">
                     <SidebarItem
-                        icon={LayoutDashboard}
-                        label="Dashboard"
-                        isActive={currentPath === '/' || currentPath === '/dashboard'}
-                        onClick={() => onNavigate('/dashboard')}
-                    />
-                    <SidebarItem
-                        icon={Library}
-                        label="Library"
-                        isActive={currentPath === '/library' || currentPath === '/library/design' || currentPath === '/library/assets'}
-                        onClick={() => onNavigate('/library')}
+                        icon={Grid}
+                        label="Création de contenu"
                         hasChildren={true}
+                        defaultExpanded={true}
                         childrenItems={[
-                            { label: "Design System", isActive: currentPath === '/library/design', onClick: () => onNavigate('/library/design') },
-                            { label: "Assets", isActive: currentPath === '/library/assets', onClick: () => onNavigate('/library/assets') }
+                            {
+                                icon: Library,
+                                label: "Bibliothèque",
+                                isActive: currentPath === '/library',
+                                onClick: () => onNavigate('/library')
+                            },
+                            {
+                                icon: Lightbulb,
+                                label: "Boîte à idées",
+                                isActive: currentPath === '/ideas',
+                                onClick: () => onNavigate('/ideas')
+                            },
+                            {
+                                icon: Edit3,
+                                label: "Éditeur de bloc",
+                                isActive: currentPath === '/editor',
+                                onClick: () => onNavigate('/editor')
+                            }
                         ]}
                     />
                     <SidebarItem
-                        icon={Calendar}
-                        label="Calendar"
-                        isActive={currentPath === '/calendar'}
-                        onClick={() => onNavigate('/calendar')}
+                        icon={LayoutDashboard}
+                        label="Organisation"
+                        hasChildren={true}
+                        defaultExpanded={true}
+                        childrenItems={[
+                            {
+                                icon: LayoutDashboard,
+                                label: "Tableau de bord",
+                                isActive: currentPath === '/' || currentPath === '/dashboard',
+                                onClick: () => onNavigate('/dashboard')
+                            },
+                            {
+                                icon: Calendar,
+                                label: "Calendrier",
+                                isActive: currentPath === '/calendar',
+                                onClick: () => onNavigate('/calendar')
+                            }
+                        ]}
+                    />
+                </SidebarSection>
+
+                {/* Settings at the bottom */}
+                <SidebarSection title="Système">
+                    <SidebarItem
+                        icon={Settings}
+                        label="Paramètres"
+                        isActive={currentPath === '/settings'}
+                        onClick={() => onNavigate('/settings')}
                     />
                     <SidebarItem
-                        icon={Lightbulb}
-                        label="Ideas Bank"
-                        isActive={currentPath === '/ideas'}
-                        onClick={() => onNavigate('/ideas')}
+                        icon={UserPlus}
+                        label="Inviter des membres"
+                        onClick={() => setIsInviteOpen(true)}
                     />
                 </SidebarSection>
 
             </div>
+            <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} />
         </div>
     );
 };

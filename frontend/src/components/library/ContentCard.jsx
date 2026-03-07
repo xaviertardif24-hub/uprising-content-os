@@ -1,25 +1,6 @@
-import { Play, Star, Calendar, ArrowUpRight } from 'lucide-react'
+import { Star, Wand2 } from 'lucide-react'
 
-const ContentCard = ({ item, onClick, isLoading }) => {
-    if (isLoading) {
-        return (
-            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm animate-pulse">
-                <div className="aspect-video bg-slate-100 dark:bg-slate-800" />
-                <div className="p-8 space-y-4">
-                    <div className="flex justify-between items-center">
-                        <div className="h-4 w-20 bg-slate-100 rounded-lg" />
-                        <div className="h-4 w-12 bg-slate-100 rounded-lg" />
-                    </div>
-                    <div className="h-8 w-3/4 bg-slate-100 rounded-lg" />
-                    <div className="flex justify-between items-center pt-6 border-t border-slate-50">
-                        <div className="h-4 w-24 bg-slate-100 rounded-lg" />
-                        <div className="h-10 w-10 bg-slate-100 rounded-2xl" />
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
+const ContentCard = ({ item, onClick, onGenerateCaptions }) => {
     return (
         <div
             onClick={() => onClick(item)}
@@ -38,6 +19,21 @@ const ContentCard = ({ item, onClick, isLoading }) => {
                     <span className="px-2 py-0.5 bg-[var(--color-notion-bg)]/90 backdrop-blur-sm border border-[var(--color-notion-border)] text-[var(--color-notion-text-muted)] text-[10px] uppercase tracking-wider rounded">
                         {item.pillar}
                     </span>
+                </div>
+
+                {/* Generate Captions button — appears on hover */}
+                <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            onGenerateCaptions?.(item)
+                        }}
+                        className="flex items-center gap-1 px-2 py-1 bg-[var(--color-notion-accent)] text-white text-[10px] font-semibold rounded shadow-md hover:opacity-90 transition-opacity"
+                        title="Generate Captions"
+                    >
+                        <Wand2 size={10} />
+                        Captions
+                    </button>
                 </div>
             </div>
 

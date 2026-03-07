@@ -34,7 +34,7 @@ const Block = ({ id, content, type, onUpdate, onAdd, onRemove, onFocusNext, auto
                     setSlashMenuOpen(true);
                     // Minimal position estimation
                     const rect = e.target.getBoundingClientRect();
-                    setMenuPosition({ x: rect.left, y: rect.bottom + window.scrollY });
+                    setMenuPosition({ x: rect.left, y: rect.bottom });
                 }
                 return;
             }

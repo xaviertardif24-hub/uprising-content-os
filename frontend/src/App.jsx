@@ -9,6 +9,8 @@ import Calendar from './pages/Calendar'
 import IdeasBank from './pages/IdeasBank'
 import Settings from './pages/Settings'
 import BlockEditorDemo from './pages/BlockEditorDemo'
+import Search from './pages/Search'
+import Updates from './pages/Updates'
 import MainLayoutNotion from './components/layout/Notion/MainLayoutNotion'
 
 const ProtectedRoute = ({ children }) => {
@@ -71,6 +73,8 @@ function AppContent() {
                     <Route path="ideas" element={<AnimatedPage><IdeasBank /></AnimatedPage>} />
                     <Route path="editor" element={<AnimatedPage><BlockEditorDemo /></AnimatedPage>} />
                     <Route path="settings" element={<AnimatedPage><Settings /></AnimatedPage>} />
+                    <Route path="search" element={<AnimatedPage><Search /></AnimatedPage>} />
+                    <Route path="updates" element={<AnimatedPage><Updates /></AnimatedPage>} />
                 </Route>
             </Routes>
         </AnimatePresence>

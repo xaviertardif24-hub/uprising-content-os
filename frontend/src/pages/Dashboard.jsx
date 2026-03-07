@@ -1,262 +1,167 @@
-import { useMemo, useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import {
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    ResponsiveContainer,
-    AreaChart,
-    Area
-} from 'recharts'
-import {
-    Video,
-    Star,
-    Lightbulb,
-    TrendingUp,
-    PlusCircle,
-    ArrowUpRight,
-    Clock,
-    LayoutDashboard,
-    ChevronRight
+    Clock, CheckSquare, Sparkles, TrendingUp, Search, 
+    FileText, Users, Home, Workflow, Settings, FileIcon, UserIcon, LibraryBig
 } from 'lucide-react'
-import { MOCK_CONTENT } from '../data/mockContent'
-import { Link } from 'react-router-dom'
-import Skeleton from '../components/common/Skeleton'
+import { useAuth } from '../context/AuthContext'
+
+const RECENTLY_VISITED = [
+    { title: 'Example PRD', icon: FileText, date: 'J Feb 21', color: 'text-blue-500' },
+    { title: 'Docs', icon: FileIcon, date: 'J Feb 21', color: 'text-gray-500' },
+    { title: 'Interview participants', icon: Users, date: 'J Just now', color: 'text-gray-500' },
+    { title: 'Trial run', icon: FileText, date: 'J Just now', color: 'text-gray-500' },
+    { title: 'Getting Started', icon: Star, date: 'J Feb 21', color: 'text-gray-500' },
+]
+
+const MY_TASKS = [
+    { title: 'Task', date: 'February 6, 2024', status: 'In progress', statusColor: 'bg-blue-100 text-blue-800', list: 'Tasks', listIcon: CheckSquare },
+    { title: 'Trial run', date: 'February 25, 2024', status: 'Not started', statusColor: 'bg-gray-100 text-gray-800', list: 'Tasks', listIcon: CheckSquare },
+    { title: 'Interview participants', date: 'Add Due', status: 'Not started', statusColor: 'bg-gray-100 text-gray-800', list: 'Tasks', listIcon: CheckSquare },
+]
+
+const SUGGESTED = [
+    { title: 'Content', icon: FileText },
+    { title: 'App', icon: Search },
+    { title: 'Home', icon: Home },
+    { title: 'Flow', icon: Workflow },
+    { title: 'Curator', icon: LibraryBig },
+    { title: 'People', icon: Users },
+    { title: 'Tools', icon: Settings },
+]
+
+const TRENDING = [
+    { title: 'Curator', icon: LibraryBig },
+    { title: 'Flow', icon: Workflow },
+    { title: 'Compensation review policy', icon: FileIcon },
+    { title: 'Hyperlink', icon: Sparkles },
+    { title: 'Toggle Button & Group', icon: Sparkles },
+    { title: 'Weekly sync @Tuesday', icon: FileIcon },
+    { title: 'Label', icon: FileIcon },
+]
+
+// Import Star here so it's defined
+import { Star } from 'lucide-react'
 
 const Dashboard = () => {
-    const [isLoading, setIsLoading] = useState(true)
-
-    useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1000)
-        return () => clearTimeout(timer)
-    }, [])
-
-    const stats = useMemo(() => {
-        const total = MOCK_CONTENT.length
-        const avgScore = (MOCK_CONTENT.reduce((acc, curr) => acc + curr.score, 0) / total).toFixed(1)
-        const recent = MOCK_CONTENT.slice(0, 3)
-
-        // Data for charts
-        const chartData = MOCK_CONTENT.map(item => ({
-            name: item.title.substring(0, 10) + '...',
-            score: item.score,
-            fullTitle: item.title
-        }))
-
-        return { total, avgScore, recent, chartData }
-    }, [])
-
-    const StatCard = ({ icon: Icon, label, value, trend, delay = 0 }) => (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay }}
-            className="group flex flex-col p-4 rounded-md border border-[var(--color-notion-border)] hover:bg-[var(--color-notion-bg-hover)] transition-colors duration-200 cursor-default"
-        >
-            <div className="flex items-center gap-2 mb-2">
-                <Icon size={16} className="text-[var(--color-notion-text-muted)] group-hover:text-[var(--color-notion-text)] transition-colors" />
-                <span className="text-xs font-medium text-[var(--color-notion-text-muted)] uppercase tracking-wider">{label}</span>
-            </div>
-            <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-semibold text-[var(--color-notion-text)]">{value}</span>
-                {trend && (
-                    <span className="text-xs text-[var(--color-notion-text-meta)] flex items-center gap-1">
-                        <TrendingUp size={12} />
-                        {trend}
-                    </span>
-                )}
-            </div>
-        </motion.div>
-    )
-
+    const { user } = useAuth()
+    const userName = user?.name || 'Jane Smith' // Fallback for matching image exactly
+    
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            <header className="flex items-center justify-between border-b border-[var(--color-notion-border)] pb-4 mb-6">
-                <div>
-                    <h1 className="text-3xl font-semibold text-[var(--color-notion-text)] tracking-tight">
-                        Content Dashboard
-                    </h1>
-                </div>
-                <div className="flex gap-4">
-                    <Link
-                        to="/library"
-                        className="bg-[var(--color-notion-accent)] text-white px-4 py-2 rounded-md font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
-                    >
-                        <PlusCircle size={16} />
-                        New page
-                    </Link>
-                </div>
+        <div className="w-full max-w-[900px] mx-auto animate-in fade-in duration-500 pb-12 pt-4">
+            
+            {/* Header */}
+            <header className="flex items-center justify-center mb-10">
+                <h1 className="text-2xl font-bold text-[#37352F] tracking-tight">
+                    🌤️ Bonjour, {userName}
+                </h1>
             </header>
 
-            {/* Grid Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {isLoading ? (
-                    [1, 2, 3].map((n) => (
-                        <div key={n} className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-100/50 dark:shadow-none">
-                            <div className="flex justify-between mb-6">
-                                <Skeleton className="w-16 h-16 rounded-2xl" />
-                                <Skeleton className="w-20 h-8 rounded-full" />
-                            </div>
-                            <Skeleton className="h-4 w-1/3 mb-4" variant="text" />
-                            <Skeleton className="h-10 w-1/2" variant="text" />
-                        </div>
-                    ))
-                ) : (
-                    <>
-                        <StatCard
-                            icon={Video}
-                            label="Total Assets"
-                            value={stats.total}
-                            trend="+12%"
-                            colorClass="bg-blue-50 text-blue-600"
-                            delay={0.1}
-                        />
-                        <StatCard
-                            icon={Star}
-                            label="Avg AI Score"
-                            value={`${stats.avgScore}/10`}
-                            trend="+0.4"
-                            colorClass="bg-amber-50 text-amber-600"
-                            delay={0.2}
-                        />
-                        <StatCard
-                            icon={Lightbulb}
-                            label="Pending Ideas"
-                            value="8"
-                            trend="New"
-                            colorClass="bg-purple-50 text-purple-600"
-                            delay={0.3}
-                        />
-                    </>
-                )}
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Quality Chart */}
-                <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.4 }}
-                    className="border border-[var(--color-notion-border)] rounded-md p-6"
-                >
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-sm font-semibold text-[var(--color-notion-text)]">Content Quality Over Time</h2>
-                        <div className="text-[11px] font-medium text-[var(--color-notion-text-muted)] bg-[var(--color-notion-bg-subtle)] px-2 py-1 rounded">7 Days Analysis</div>
+            <div className="space-y-8">
+                
+                {/* Recently Visited */}
+                <section>
+                    <div className="flex items-center gap-2 mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
+                        <Clock size={14} />
+                        <h2>Récemment visité</h2>
                     </div>
-                    <div className="h-[300px] w-full">
-                        {isLoading ? (
-                            <div className="h-full w-full flex flex-col gap-4">
-                                <Skeleton className="flex-1 w-full" />
-                            </div>
-                        ) : (
-                            <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={stats.chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                    <defs>
-                                        <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="var(--color-notion-accent)" stopOpacity={0.2} />
-                                            <stop offset="95%" stopColor="var(--color-notion-accent)" stopOpacity={0} />
-                                        </linearGradient>
-                                    </defs>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-notion-border)" />
-                                    <XAxis
-                                        dataKey="name"
-                                        axisLine={false}
-                                        tickLine={false}
-                                        tick={{ fill: 'var(--color-notion-text-muted)', fontSize: 10 }}
-                                    />
-                                    <YAxis
-                                        domain={[0, 10]}
-                                        axisLine={false}
-                                        tickLine={false}
-                                        tick={{ fill: 'var(--color-notion-text-muted)', fontSize: 10 }}
-                                    />
-                                    <Tooltip
-                                        contentStyle={{
-                                            backgroundColor: 'var(--color-notion-bg)',
-                                            borderRadius: '6px',
-                                            border: '1px solid var(--color-notion-border)',
-                                            boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-                                            padding: '8px 12px',
-                                            fontSize: '12px'
-                                        }}
-                                        itemStyle={{ fontWeight: '500', color: 'var(--color-notion-text)' }}
-                                    />
-                                    <Area
-                                        type="monotone"
-                                        dataKey="score"
-                                        stroke="var(--color-notion-accent)"
-                                        strokeWidth={2}
-                                        fillOpacity={1}
-                                        fill="url(#colorScore)"
-                                    />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        )}
-                    </div>
-                </motion.div>
-
-                {/* Recent Activities */}
-                <div className="space-y-4">
-                    <h2 className="text-sm font-semibold text-[var(--color-notion-text)] mb-4">Recent Assets</h2>
-                    <div className="flex flex-col gap-1">
-                        {isLoading ? (
-                            [1, 2, 3].map(i => (
-                                <div key={i} className="p-2 border border-transparent flex items-center gap-3">
-                                    <Skeleton className="w-8 h-8 rounded" />
-                                    <div className="flex-1">
-                                        <Skeleton className="h-4 w-3/4 mb-1" variant="text" />
-                                        <Skeleton className="h-3 w-1/4" variant="text" />
+                    <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-2 px-2">
+                        {RECENTLY_VISITED.map((item, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.2, delay: idx * 0.05 }}
+                                className="group shrink-0 w-[140px] h-[100px] border border-[rgba(55,53,47,0.16)] rounded-lg p-3 flex flex-col justify-between hover:bg-[rgba(55,53,47,0.04)] cursor-pointer transition-colors shadow-sm"
+                            >
+                                <div className={`${item.color}`}>
+                                    <item.icon size={20} className={item.title === 'Example PRD' ? 'text-blue-500 fill-blue-500' : ''} />
+                                </div>
+                                <div>
+                                    <h3 className="text-sm font-medium text-[#37352F] truncate">{item.title}</h3>
+                                    <div className="flex items-center gap-1 mt-1 text-xs text-[rgba(55,53,47,0.65)]">
+                                        <div className="w-4 h-4 rounded-sm bg-gray-200 flex items-center justify-center text-[10px]">
+                                            {item.date.charAt(0)}
+                                        </div>
+                                        <span className="truncate">{item.date.substring(2)}</span>
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            stats.recent.map((asset, idx) => (
-                                <motion.div
-                                    key={asset.id}
-                                    initial={{ opacity: 0, x: 10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.3, delay: 0.5 + (idx * 0.1) }}
-                                    className="group p-2 -mx-2 rounded hover:bg-[var(--color-notion-bg-hover)] transition-colors duration-150 flex items-center justify-between cursor-pointer"
-                                >
-                                    <div className="flex items-center gap-3">
-                                        {/* Fallback icon for Notion vibe instead of large thumbnails */}
-                                        <div className="w-6 h-6 flex items-center justify-center text-[var(--color-notion-text-muted)] group-hover:text-[var(--color-notion-text)]">
-                                            <Video size={16} />
-                                        </div>
-                                        <div>
-                                            <h3 className="font-medium text-[var(--color-notion-text)] text-sm line-clamp-1">{asset.title}</h3>
-                                            <p className="text-[var(--color-notion-text-meta)] text-xs flex items-center gap-1 mt-0.5">
-                                                {asset.date}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="opacity-0 group-hover:opacity-100 p-1 text-[var(--color-notion-text-muted)] hover:text-[var(--color-notion-text)] transition-all">
-                                        <ArrowUpRight size={14} />
-                                    </div>
-                                </motion.div>
-                            ))
-                        )}
+                            </motion.div>
+                        ))}
                     </div>
+                </section>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8 }}
-                        className="mt-6"
-                    >
-                        <Link
-                            to="/library"
-                            className="inline-flex items-center text-sm text-[var(--color-notion-text-muted)] hover:text-[var(--color-notion-text)] transition-colors gap-1 group"
-                        >
-                            View Full Library
-                            <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-                        </Link>
-                    </motion.div>
+                {/* My Tasks */}
+                <section>
+                    <div className="flex items-center gap-2 mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
+                        <CheckSquare size={14} />
+                        <h2>Mes tâches</h2>
+                    </div>
+                    <div className="border border-[rgba(55,53,47,0.16)] rounded-lg overflow-hidden shadow-sm">
+                        <div className="flex flex-col">
+                            {MY_TASKS.map((task, idx) => (
+                                <div key={idx} className="group flex items-center justify-between p-3 border-b border-[rgba(55,53,47,0.1)] last:border-0 hover:bg-[rgba(55,53,47,0.04)] cursor-pointer transition-colors">
+                                    <div className="flex items-center gap-3 flex-1">
+                                        <div className="text-[rgba(55,53,47,0.4)] group-hover:text-[rgba(55,53,47,0.8)]"><FileIcon size={16} /></div>
+                                        <span className="text-sm font-medium text-[#37352F]">{task.title}</span>
+                                    </div>
+                                    <div className="flex items-center gap-6 text-sm text-[rgba(55,53,47,0.65)]">
+                                        <span className="w-32 text-right">{task.date}</span>
+                                        <span className={`px-2 py-0.5 rounded-sm text-xs font-medium ${task.statusColor} w-24 text-center`}>
+                                            {task.status}
+                                        </span>
+                                        <div className="flex flex-row items-center gap-1 w-16">
+                                            <task.listIcon size={14} className="text-orange-400" />
+                                            <span>{task.list}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Bottom Grid */}
+                <div className="grid grid-cols-2 gap-8 pt-4">
+                    {/* Suggested */}
+                    <section>
+                        <div className="flex items-center gap-2 mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
+                            <Sparkles size={14} />
+                            <h2>Suggéré pour vous</h2>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            {SUGGESTED.map((item, idx) => (
+                                <div key={idx} className="flex items-center gap-2 p-1.5 rounded hover:bg-[rgba(55,53,47,0.08)] cursor-pointer text-sm text-[#37352F]">
+                                    <div className="text-[rgba(55,53,47,0.65)]"><item.icon size={16} /></div>
+                                    <span className="font-medium">{item.title}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Trending */}
+                    <section>
+                        <div className="flex items-center justify-between mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
+                            <div className="flex items-center gap-2">
+                                <TrendingUp size={14} />
+                                <h2>Tendances</h2>
+                            </div>
+                            <div className="text-xs flex items-center gap-1 cursor-pointer hover:bg-[rgba(55,53,47,0.08)] px-1.5 py-0.5 rounded">
+                                Dans M Uprising Studio <span className="text-[10px]">▼</span>
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            {TRENDING.map((item, idx) => (
+                                <div key={idx} className="flex items-center gap-2 p-1.5 rounded hover:bg-[rgba(55,53,47,0.08)] cursor-pointer text-sm text-[#37352F]">
+                                    <div className="text-[rgba(55,53,47,0.65)]"><item.icon size={16} /></div>
+                                    <span className="font-medium truncate">{item.title}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
                 </div>
             </div>
+            
         </div>
     )
 }
