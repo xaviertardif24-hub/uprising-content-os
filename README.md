@@ -1,35 +1,32 @@
-# Uprising Studio (Content OS)
+# 🚀 Antigravité - Workspace Clusters
 
-Uprising Studio est un système intelligent de gestion de contenu conçu pour transformer des milliers de vidéos inorganisées en une machine de production automatisée, avec une interface inspirée de Notion pour une productivité maximale.
+Bienvenue dans l'espace de travail consolidé. Cet environnement est organisé en trois clusters principaux pour une gestion claire et efficace.
 
+---
 
-## Vision
+## 📂 Clusters de Projets
 
-Réduire le temps de production de contenu de 70% tout en maintenant une voix de marque cohérente et une qualité premium sur toutes les plateformes (Instagram, TikTok, LinkedIn, YouTube, Facebook).
+### 1. [OLIVIER](file:///c:/Users/xavie/OneDrive/Desktop/Contrat%20Olivier/Document%20Olivier/OLIVIER/)
+**Projet Principal : Content OS.** 
+Contient tout l'écosystème du contrat initial :
+- Backend (FastAPI)
+- Frontend (React)
+- Documentation Stratégique & Planning
+- Prototypes IA
 
-## Fonctionnalités Clés
+### 2. [AETHERA](file:///c:/Users/xavie/OneDrive/Desktop/Contrat%20Olivier/Document%20Olivier/AETHERA/)
+**Nouveau Projet : Aethera.**
+Espace dédié au développement et à l'automatisation pour Aethera.
 
-- **Interface Notion-Like** : Une expérience utilisateur fluide, familière et hautement productive.
-- **Chatbot Royal AI** : Assistant intelligent intégré pour l'idéation et le support en temps réel.
-- **Boîte à Idées** : Capturez, analysez et scorez vos idées de contenu automatiquement via l'IA.
-- **Éditeur de Blocs** : Créez du contenu structuré avec un éditeur moderne supportant les commandes slash (/).
-- **Espaces d'Équipe** : Collaborez en temps réel avec des indicateurs de présence et une gestion fine des tâches.
-- **Calendrier de Contenu** : Planifiez vos publications avec plusieurs vues (Mois, Semaine).
+### 3. [UPRISING-STUDIO](file:///c:/Users/xavie/OneDrive/Desktop/Contrat%20Olivier/Document%20Olivier/UPRISING-STUDIO/)
+**Studio Workspace.**
+Espace réservé aux projets internes et à l'évolution du studio.
 
-## Dernières Mises à Jour (v1.2.0)
+---
 
-- **Corrections d'Audit UX** : Cartes dashboard cliquables, nettoyage des menus inutilisés, et modales de détails pour les idées.
-- **Localisation Complète** : Traduction intégrale de l'interface en français naturel.
-- **Optimisation de l'Éditeur** : Amélioration du menu slash et ajout de contrôles de déplacement intuitifs pour les blocs.
-- **Sécurité et Feedback** : Ajout de confirmations de suppression et de notifications (toasts) pour les actions utilisateur.
+## 🛠️ Instructions de Navigation
+- Pour travailler sur un projet spécifique, déplacez votre terminal dans le dossier correspondant.
+- Les scripts de démarrage (ex: `start-frontend.ps1`) se trouvent désormais dans `OLIVIER/`.
 
-## Roadmap & Status
-
-- [x] Initial Repository Setup
-- [x] Architecture & Documentation (v1)
-- [x] Interface Ultra-Polie (Notion-Like)
-- [x] Chatbot Royal AI & Boîte à Idées
-- [x] Système de Collaboration (Front-end)
-- [/] Intégration IA Backend (Scoring, Transcription)
-- [ ] Connecteur Google Drive / Stockage Cloud
-- [ ] Automatisation des Publications (Buffer/Social API)
+---
+*Antigravité - L'intelligence au service de votre vision.*
