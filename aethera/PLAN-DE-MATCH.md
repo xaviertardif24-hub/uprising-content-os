@@ -14,4 +14,4 @@ Suivi des tâches pour le lancement du projet Aethera.
 
 ## Phase 3 : Lancement
 - [ ] **Formation** : Présentation du workflow à l'équipe Aethera.
-- [ ] **Légalité** : Finaliser T&C et Politique de Confidentialité.
+- [x] **Légalité** : Finaliser T&C et Politique de Confidentialité.
