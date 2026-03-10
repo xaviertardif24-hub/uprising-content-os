@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, Search, Clock, Settings, LayoutDashboard, Library, Calendar, Lightbulb, Edit3, UserPlus, Grid } from 'lucide-react';
+import { ChevronRight, Search, Clock, Settings, LayoutDashboard, Library, Calendar, Lightbulb, Edit3, UserPlus, Grid, CheckSquare, Database, Video } from 'lucide-react';
 import InviteModal from '../../common/InviteModal';
 
 const SidebarItem = ({ icon: Icon, label, isActive, onClick, hasChildren = false, childrenItems = [], defaultExpanded = false }) => {
@@ -84,16 +84,16 @@ const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
                 {/* Quick Actions */}
                 <SidebarSection>
                     <SidebarItem icon={Search} label="Recherche" onClick={() => onNavigate('/search')} isActive={currentPath === '/search'} />
-                    <SidebarItem 
-                        icon={Clock} 
+                    <SidebarItem
+                        icon={Clock}
                         label={
                             <div className="flex items-center justify-between w-full pr-1">
                                 <span>Nouveautés</span>
                                 <span className="bg-[#EB5757] text-white text-[9px] font-bold px-1 rounded-sm h-4 min-w-[16px] flex items-center justify-center">3</span>
                             </div>
-                        } 
-                        onClick={() => onNavigate('/updates')} 
-                        isActive={currentPath === '/updates'} 
+                        }
+                        onClick={() => onNavigate('/updates')}
+                        isActive={currentPath === '/updates'}
                     />
                 </SidebarSection>
 
@@ -122,6 +122,12 @@ const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
                                 label: "Éditeur de bloc",
                                 isActive: currentPath === '/editor',
                                 onClick: () => onNavigate('/editor')
+                            },
+                            {
+                                icon: Video,
+                                label: "Workflow Créatif",
+                                isActive: currentPath === '/content-tasks',
+                                onClick: () => onNavigate('/content-tasks')
                             }
                         ]}
                     />
@@ -142,6 +148,24 @@ const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
                                 label: "Calendrier",
                                 isActive: currentPath === '/calendar',
                                 onClick: () => onNavigate('/calendar')
+                            },
+                            {
+                                icon: CheckSquare,
+                                label: "Mes tâches",
+                                isActive: currentPath === '/tasks',
+                                onClick: () => onNavigate('/tasks')
+                            },
+                            {
+                                icon: Database,
+                                label: "La Banque",
+                                isActive: currentPath === '/bank',
+                                onClick: () => onNavigate('/bank')
+                            },
+                            {
+                                icon: Layout,
+                                label: "Templates",
+                                isActive: currentPath === '/templates',
+                                onClick: () => onNavigate('/templates')
                             }
                         ]}
                     />

@@ -11,6 +11,12 @@ import Settings from './pages/Settings'
 import BlockEditorDemo from './pages/BlockEditorDemo'
 import Search from './pages/Search'
 import Updates from './pages/Updates'
+import Tasks from './pages/Tasks'
+import ContentTasks from './pages/ContentTasks'
+import MediaBank from './pages/MediaBank'
+import ProjectDetail from './pages/ProjectDetail'
+import MediaReview from './pages/MediaReview'
+import Templates from './pages/Templates'
 import MainLayoutNotion from './components/layout/Notion/MainLayoutNotion'
 
 const ProtectedRoute = ({ children }) => {
@@ -75,6 +81,12 @@ function AppContent() {
                     <Route path="settings" element={<AnimatedPage><Settings /></AnimatedPage>} />
                     <Route path="search" element={<AnimatedPage><Search /></AnimatedPage>} />
                     <Route path="updates" element={<AnimatedPage><Updates /></AnimatedPage>} />
+                    <Route path="tasks" element={<AnimatedPage><Tasks /></AnimatedPage>} />
+                    <Route path="content-tasks" element={<AnimatedPage><ContentTasks /></AnimatedPage>} />
+                    <Route path="bank" element={<AnimatedPage><MediaBank /></AnimatedPage>} />
+                    <Route path="project/:id" element={<AnimatedPage><ProjectDetail /></AnimatedPage>} />
+                    <Route path="media/:id" element={<AnimatedPage><MediaReview /></AnimatedPage>} />
+                    <Route path="templates" element={<AnimatedPage><Templates /></AnimatedPage>} />
                 </Route>
             </Routes>
         </AnimatePresence>

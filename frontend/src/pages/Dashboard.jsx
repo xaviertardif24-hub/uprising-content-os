@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
-    Clock, CheckSquare, Sparkles, TrendingUp, Search, 
-    FileText, Users, Home, Workflow, Settings, FileIcon, UserIcon, LibraryBig, Star
+    Clock, CheckSquare, Sparkles, TrendingUp, Search,
+    FileText, Users, Home, Workflow, Settings, FileIcon, UserIcon, LibraryBig, Star, LayoutGrid, ChevronRight
 } from 'lucide-react'
+import { useClipflowStore } from '../store/useClipflowStore'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../components/common/Toaster'
 import { useNavigate } from 'react-router-dom'
@@ -49,10 +50,10 @@ const Dashboard = () => {
     const { toast } = useToast()
     const navigate = useNavigate()
     const userName = user?.name || 'Jane Smith' // Fallback for matching image exactly
-    
+
     return (
         <div className="w-full max-w-[900px] mx-auto animate-in fade-in duration-500 pb-12 pt-4">
-            
+
             {/* Header */}
             <header className="flex items-center justify-center mb-10">
                 <h1 className="text-2xl font-bold text-[#37352F] tracking-tight">
@@ -61,7 +62,7 @@ const Dashboard = () => {
             </header>
 
             <div className="space-y-8">
-                
+
                 {/* Recently Visited */}
                 <section>
                     <div className="flex items-center gap-2 mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
@@ -88,6 +89,54 @@ const Dashboard = () => {
                                             {item.date.charAt(0)}
                                         </div>
                                         <span className="truncate">{item.date.substring(2)}</span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Clipflow Workload Overview */}
+                <section>
+                    <div className="flex items-center justify-between mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
+                        <div className="flex items-center gap-2">
+                            <LayoutGrid size={14} />
+                            <h2>Projets Clipflow (Charge de travail)</h2>
+                        </div>
+                        <button
+                            onClick={() => navigate('/tasks')}
+                            className="text-xs hover:bg-[rgba(55,53,47,0.08)] px-1.5 py-0.5 rounded transition-colors"
+                        >
+                            Voir tout
+                        </button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {useClipflowStore.getState().projects.map((project) => (
+                            <motion.div
+                                key={project.id}
+                                onClick={() => navigate(`/project/${project.id}`)}
+                                className="group p-4 border border-[rgba(55,53,47,0.16)] rounded-lg hover:bg-[rgba(55,53,47,0.04)] cursor-pointer transition-all shadow-sm bg-white"
+                            >
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded bg-blue-50 flex items-center justify-center text-blue-600">
+                                            <TrendingUp size={16} />
+                                        </div>
+                                        <h3 className="text-sm font-semibold text-[#37352F]">{project.title}</h3>
+                                    </div>
+                                    <ChevronRight size={14} className="text-[rgba(55,53,47,0.4)] group-hover:text-blue-600 transition-colors" />
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between text-xs text-[rgba(55,53,47,0.65)]">
+                                        <span>Charge de travail</span>
+                                        <span className="font-mono font-bold text-blue-600">{Math.round(project.workload * 100)}%</span>
+                                    </div>
+                                    <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${project.workload * 100}%` }}
+                                            className={`h-full ${project.workload > 0.8 ? 'bg-red-500' : project.workload > 0.5 ? 'bg-orange-500' : 'bg-green-500'}`}
+                                        />
                                     </div>
                                 </div>
                             </motion.div>
@@ -140,8 +189,8 @@ const Dashboard = () => {
                         </div>
                         <div className="flex flex-col gap-1">
                             {SUGGESTED.map((item, idx) => (
-                                <div 
-                                    key={idx} 
+                                <div
+                                    key={idx}
                                     role="button"
                                     tabIndex={0}
                                     onClick={() => toast(`Navigation vers ${item.title}`)}
@@ -168,8 +217,8 @@ const Dashboard = () => {
                         </div>
                         <div className="flex flex-col gap-1">
                             {TRENDING.map((item, idx) => (
-                                <div 
-                                    key={idx} 
+                                <div
+                                    key={idx}
                                     role="button"
                                     tabIndex={0}
                                     onClick={() => toast(`Ouverture de la tendance : ${item.title}`)}
@@ -184,7 +233,7 @@ const Dashboard = () => {
                     </section>
                 </div>
             </div>
-            
+
         </div>
     )
 }
