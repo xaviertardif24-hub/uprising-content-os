@@ -1,0 +1,189 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - navigation [ref=e6]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - generic [ref=e11]: Cofounder
+      - generic [ref=e12]:
+        - button "Documentation" [ref=e13]
+        - button "Notre histoire" [ref=e14]
+      - generic [ref=e15]:
+        - button "Se connecter" [ref=e16]
+        - button "S'inscrire" [ref=e17]
+    - main [ref=e18]:
+      - generic [ref=e21]:
+        - button "AI cofounder" [ref=e23]:
+          - text: AI cofounder
+          - img [ref=e24]
+        - generic [ref=e27]:
+          - heading "Créez quelque chose de incroyable nouveau innovant rentable intelligent" [level=1] [ref=e28]:
+            - generic [ref=e29]: Créez quelque chose de
+            - generic [ref=e30]:
+              - generic [ref=e31]: incroyable
+              - generic [ref=e32]: nouveau
+              - generic [ref=e33]: innovant
+              - generic [ref=e34]: rentable
+              - generic [ref=e35]: intelligent
+          - paragraph [ref=e36]: Recherchez, validez et construisez votre produit avec l'IA. De l'idée à l'exécution, votre co-fondateur virtuel vous accompagne à chaque étape.
+        - generic [ref=e38]:
+          - generic [ref=e39]:
+            - textbox "Je veux ouvrir un café de spécialité..." [ref=e40]
+            - button [disabled] [ref=e41]:
+              - img [ref=e42]
+          - generic [ref=e44]:
+            - button "Brainstorming d'idées" [ref=e45]:
+              - img [ref=e46]
+              - text: Brainstorming d'idées
+            - generic [ref=e48]:
+              - generic [ref=e49]:
+                - img [ref=e50]
+                - text: Mode privé
+              - button [ref=e55]
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - heading "Évolution du Produit" [level=2] [ref=e59]
+        - paragraph [ref=e60]: Nous construisons l'avenir de l'entrepreneuriat, une fonctionnalité à la fois. Découvrez nos dernières mises à jour.
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - heading "Changelog de l'aventure" [level=2] [ref=e63]
+          - paragraph [ref=e64]: Découvrez l'évolution de Cofounder et les dernières fonctionnalités ajoutées pour vous aider à construire votre produit.
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - heading "Mai 2026" [level=3] [ref=e70]
+            - generic [ref=e72]:
+              - paragraph [ref=e73]: Expansion des capacités de l'IA avec des agents autonomes pour la recherche approfondie.
+              - generic [ref=e74]:
+                - generic [ref=e75]:
+                  - img [ref=e77]
+                  - heading "Agents de Recherche" [level=4] [ref=e80]
+                  - paragraph [ref=e81]: Des agents autonomes qui naviguent sur le web pour valider vos hypothèses.
+                - generic [ref=e82]:
+                  - img [ref=e84]
+                  - heading "Prototypage Rapide" [level=4] [ref=e86]
+                  - paragraph [ref=e87]: Génération automatique de wireframes à partir de vos descriptions textuelles.
+          - generic [ref=e88]:
+            - heading "Avril 2026" [level=3] [ref=e92]
+            - generic [ref=e94]:
+              - paragraph [ref=e95]: Intégration de nouveaux outils financiers et juridiques pour structurer votre startup.
+              - generic [ref=e97]:
+                - img [ref=e99]
+                - heading "Assistant Juridique" [level=4] [ref=e101]
+                - paragraph [ref=e102]: Génération de statuts et de pactes d'associés conformes.
+          - generic [ref=e103]:
+            - heading "Mars 2026" [level=3] [ref=e107]
+            - generic [ref=e109]:
+              - paragraph [ref=e110]: Lancement de nouvelles fonctionnalités d'analyse et de présentation pour accélérer votre go-to-market.
+              - generic [ref=e111]:
+                - generic [ref=e112]:
+                  - img [ref=e114]
+                  - heading "Analyse de Marché IA" [level=4] [ref=e117]
+                  - paragraph [ref=e118]: Calcul automatique du TAM/SAM/SOM et recherche de concurrents en temps réel.
+                - generic [ref=e119]:
+                  - img [ref=e121]
+                  - heading "Générateur de Pitch Deck" [level=4] [ref=e124]
+                  - paragraph [ref=e125]: Transformez votre canvas en une présentation structurée prête pour les investisseurs.
+          - generic [ref=e126]:
+            - heading "Février 2026" [level=3] [ref=e130]
+            - generic [ref=e132]:
+              - paragraph [ref=e133]: Amélioration de l'expérience de collaboration en temps réel et de l'interface du canvas.
+              - generic [ref=e134]:
+                - generic [ref=e135]:
+                  - img [ref=e137]
+                  - heading "Canvas Interactif" [level=4] [ref=e142]
+                  - paragraph [ref=e143]: Déplacez, redimensionnez et organisez vos idées visuellement sur un tableau infini.
+                - generic [ref=e144]:
+                  - img [ref=e146]
+                  - heading "Chat Contextuel" [level=4] [ref=e148]
+                  - paragraph [ref=e149]: Discutez avec votre co-fondateur IA directement depuis votre espace de travail.
+          - generic [ref=e150]:
+            - heading "Janvier 2026" [level=3] [ref=e154]
+            - generic [ref=e156]:
+              - paragraph [ref=e157]: Lancement initial de Uprising Cofounder.
+              - generic [ref=e158]:
+                - generic [ref=e159]:
+                  - generic [ref=e160]: 🚀
+                  - text: Lancement de la plateforme de base
+                - generic [ref=e161]:
+                  - generic [ref=e162]: 🧠
+                  - text: Intégration de Gemini Pro pour l'analyse d'idées
+                - generic [ref=e163]:
+                  - generic [ref=e164]: 🔒
+                  - text: Système d'authentification sécurisé
+    - generic [ref=e167]:
+      - generic [ref=e168]:
+        - heading "Questions Fréquentes" [level=2] [ref=e169]
+        - paragraph [ref=e170]: Tout ce que vous devez savoir pour démarrer.
+      - generic [ref=e171]:
+        - button "Qu'est-ce que Uprising Cofounder ?" [ref=e173]:
+          - generic [ref=e174]: Qu'est-ce que Uprising Cofounder ?
+          - img [ref=e175]
+        - button "Est-ce que mes idées sont protégées ?" [ref=e178]:
+          - generic [ref=e179]: Est-ce que mes idées sont protégées ?
+          - img [ref=e180]
+        - button "Puis-je collaborer avec mon équipe ?" [ref=e183]:
+          - generic [ref=e184]: Puis-je collaborer avec mon équipe ?
+          - img [ref=e185]
+        - button "Quel est le coût du service ?" [ref=e188]:
+          - generic [ref=e189]: Quel est le coût du service ?
+          - img [ref=e190]
+    - contentinfo [ref=e192]:
+      - generic [ref=e193]:
+        - generic [ref=e194]:
+          - generic [ref=e195]:
+            - generic [ref=e196]:
+              - img [ref=e197]
+              - generic [ref=e199]: Cofounder
+            - paragraph [ref=e200]: Votre co-fondateur IA pour transformer vos idées en startups à succès.
+          - generic [ref=e201]:
+            - heading "Produit" [level=4] [ref=e202]
+            - list [ref=e203]:
+              - listitem [ref=e204]:
+                - link "Fonctionnalités" [ref=e205] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e206]:
+                - link "Tarifs" [ref=e207] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e208]:
+                - button "Documentation" [ref=e209]
+          - generic [ref=e210]:
+            - heading "Entreprise" [level=4] [ref=e211]
+            - list [ref=e212]:
+              - listitem [ref=e213]:
+                - button "Notre histoire" [ref=e214]
+              - listitem [ref=e215]:
+                - link "Carrières" [ref=e216] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e217]:
+                - link "Contact" [ref=e218] [cursor=pointer]:
+                  - /url: "#"
+          - generic [ref=e219]:
+            - heading "Légal" [level=4] [ref=e220]
+            - list [ref=e221]:
+              - listitem [ref=e222]:
+                - link "Confidentialité" [ref=e223] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e224]:
+                - link "CGU" [ref=e225] [cursor=pointer]:
+                  - /url: "#"
+        - generic [ref=e226]:
+          - paragraph [ref=e227]: © 2026 Uprising Cofounder. Tous droits réservés.
+          - generic [ref=e228]:
+            - link "Twitter" [ref=e229] [cursor=pointer]:
+              - /url: "#"
+            - link "LinkedIn" [ref=e230] [cursor=pointer]:
+              - /url: "#"
+            - link "GitHub" [ref=e231] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=e233]:
+    - generic [ref=e234]:
+      - img [ref=e236]
+      - generic [ref=e238]:
+        - heading "Nous respectons votre vie privée" [level=3] [ref=e239]
+        - paragraph [ref=e240]: Nous utilisons des cookies pour améliorer votre expérience, analyser le trafic et personnaliser le contenu. Conformément aux réglementations canadiennes, vous avez le contrôle sur vos données.
+    - generic [ref=e241]:
+      - button "Refuser" [ref=e242]
+      - button "Accepter tout" [ref=e243]
+```

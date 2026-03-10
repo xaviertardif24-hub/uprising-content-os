@@ -1,17 +1,18 @@
-import React from 'react';
 import { MoreHorizontal, Star, Share, Clock, PanelLeft } from 'lucide-react';
 import { useToast } from '../../common/Toaster';
+import { useTranslation } from 'react-i18next';
 
 const PageTopbar = ({ title, breadcrumbs, onToggleSidebar, isSidebarCollapsed }) => {
+    const { t } = useTranslation();
     const { toast } = useToast();
     return (
         <div className="h-14 border-b border-notion-border flex items-center justify-between px-6 sticky top-0 bg-notion-bg z-10 transition-all">
             {/* Breadcrumbs Left */}
             <div className="flex items-center gap-1 text-[14px] text-notion-text-muted">
-                <button 
+                <button
                     onClick={onToggleSidebar}
                     className="p-1 hover:bg-notion-bg-hover rounded transition-colors mr-1"
-                    title={isSidebarCollapsed ? "Ouvrir la barre latérale" : "Fermer la barre latérale"}
+                    title={isSidebarCollapsed ? t('common.open_sidebar') : t('common.close_sidebar')}
                 >
                     <PanelLeft size={18} className={isSidebarCollapsed ? 'text-notion-accent' : 'text-notion-text-muted'} />
                 </button>
@@ -37,22 +38,22 @@ const PageTopbar = ({ title, breadcrumbs, onToggleSidebar, isSidebarCollapsed })
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <span 
-                        onClick={() => toast("Le partage sera bientôt disponible ! 🚀")}
+                    <span
+                        onClick={() => toast(t('common.share_soon'))}
                         className="text-[13px] hover:bg-notion-bg-hover px-2 py-1 rounded cursor-pointer transition-colors text-notion-text mr-2"
                     >
-                        Partager
+                        {t('common.share')}
                     </span>
-                    <div title="Partager" onClick={() => toast("Le partage sera bientôt disponible ! 🚀")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
+                    <div title={t('common.share')} onClick={() => toast(t('common.share_soon'))} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
                         <Share size={16} strokeWidth={1.5} />
                     </div>
-                    <div title="Mises à jour" onClick={() => toast("Les notifications seront bientôt disponibles ! 🚀")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
+                    <div title={t('common.updates')} onClick={() => toast(t('common.notify_soon'))} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
                         <Clock size={16} strokeWidth={1.5} />
                     </div>
-                    <div title="Favoris" onClick={() => toast("Ajouté aux favoris ! ⭐")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
+                    <div title={t('common.favorites')} onClick={() => toast(t('common.favorites_added'))} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
                         <Star size={16} strokeWidth={1.5} />
                     </div>
-                    <div title="Plus" className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors ml-1">
+                    <div title={t('common.more')} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors ml-1">
                         <MoreHorizontal size={16} strokeWidth={1.5} />
                     </div>
                 </div>

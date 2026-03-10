@@ -1,0 +1,98 @@
+{
+    "common": {
+        "search": "Search",
+        "updates": "Updates",
+        "dashboard": "Dashboard",
+        "settings": "Settings",
+        "save": "Save",
+        "cancel": "Cancel",
+        "add": "Add",
+        "delete": "Delete",
+        "edit": "Edit",
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "success": "Success",
+        "back": "Back",
+        "share": "Share",
+        "share_soon": "Sharing will be available soon! 🚀",
+        "notify_soon": "Notifications will be available soon! 🚀",
+        "favorites": "Favorites",
+        "favorites_added": "Added to favorites! ⭐",
+        "more": "More",
+        "open_sidebar": "Open sidebar",
+        "close_sidebar": "Close sidebar"
+    },
+    "sidebar": {
+        "workspace": "Workspace",
+        "quick_actions": "Quick Actions",
+        "team_spaces": "Team Spaces",
+        "system": "System",
+        "invite_members": "Invite Members",
+        "content_creation": "Content Creation",
+        "library": "Library",
+        "ideas_bank": "Ideas Bank",
+        "block_editor": "Block Editor",
+        "creative_workflow": "Creative Workflow",
+        "organisation": "Organisation",
+        "calendar": "Calendar",
+        "my_tasks": "My Tasks",
+        "the_bank": "The Bank",
+        "templates": "Templates"
+    },
+    "dashboard": {
+        "greeting": "Bonjour, {{name}}",
+        "recently_visited": "Recently visited",
+        "clipflow_workload": "Clipflow Workload",
+        "view_all": "View all",
+        "workload": "Workload"
+    },
+    "tasks": {
+        "title": "My Tasks",
+        "subtitle": "Manage your daily priorities.",
+        "list": "List",
+        "board": "Board",
+        "add_task": "Add a task"
+    },
+    "content_tasks": {
+        "title": "Content Creation",
+        "subtitle": "Specialized workflow for your media outputs.",
+        "script": "Script",
+        "capture": "Capture"
+    },
+    "media_bank": {
+        "title": "The Bank",
+        "subtitle": "Your central media library.",
+        "search_placeholder": "Search media...",
+        "import": "Import",
+        "categories": {
+            "all": "All",
+            "raw": "Raw",
+            "broll": "B-roll",
+            "assets": "Assets",
+            "scripts": "Scripts",
+            "exports": "Exports"
+        }
+    },
+    "project_detail": {
+        "steps": {
+            "ideation": "Ideation & Planning",
+            "scheduling": "Scheduling",
+            "capture": "Capture & Upload",
+            "review": "Review & Feedback",
+            "publication": "Publication"
+        },
+        "no_tasks": "No active tasks for this step."
+    },
+    "media_review": {
+        "feedback": "Feedback",
+        "comments": "{{count}} comments",
+        "leave_comment": "Leave a comment at {{time}}..."
+    },
+    "templates": {
+        "title": "Templates",
+        "subtitle": "Speed up your creation with pre-built structures.",
+        "search_placeholder": "Search templates...",
+        "use": "Use",
+        "community": "Community"
+    }
+}

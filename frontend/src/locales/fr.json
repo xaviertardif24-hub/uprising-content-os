@@ -1,0 +1,98 @@
+{
+    "common": {
+        "search": "Recherche",
+        "updates": "Nouveautés",
+        "dashboard": "Tableau de bord",
+        "settings": "Paramètres",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "add": "Ajouter",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "loading": "Chargement...",
+        "error": "Une erreur est survenue",
+        "success": "Succès",
+        "back": "Retour",
+        "share": "Partager",
+        "share_soon": "Le partage sera bientôt disponible ! 🚀",
+        "notify_soon": "Les notifications seront bientôt disponibles ! 🚀",
+        "favorites": "Favoris",
+        "favorites_added": "Ajouté aux favoris ! ⭐",
+        "more": "Plus",
+        "open_sidebar": "Ouvrir la barre latérale",
+        "close_sidebar": "Fermer la barre latérale"
+    },
+    "sidebar": {
+        "workspace": "Espace de travail",
+        "quick_actions": "Actions rapides",
+        "team_spaces": "Espaces d'équipe",
+        "system": "Système",
+        "invite_members": "Inviter des membres",
+        "content_creation": "Création de contenu",
+        "library": "Bibliothèque",
+        "ideas_bank": "Boîte à idées",
+        "block_editor": "Éditeur de bloc",
+        "creative_workflow": "Workflow Créatif",
+        "organisation": "Organisation",
+        "calendar": "Calendrier",
+        "my_tasks": "Mes tâches",
+        "the_bank": "La Banque",
+        "templates": "Templates"
+    },
+    "dashboard": {
+        "greeting": "Bonjour, {{name}}",
+        "recently_visited": "Récemment visité",
+        "clipflow_workload": "Projets Clipflow (Charge de travail)",
+        "view_all": "Voir tout",
+        "workload": "Charge de travail"
+    },
+    "tasks": {
+        "title": "Mes tâches",
+        "subtitle": "Gérez vos priorités quotidiennes.",
+        "list": "Liste",
+        "board": "Tableau",
+        "add_task": "Ajouter une tâche"
+    },
+    "content_tasks": {
+        "title": "Création de contenu",
+        "subtitle": "Workflow spécialisé pour vos sorties médias.",
+        "script": "Script",
+        "capture": "Capturer"
+    },
+    "media_bank": {
+        "title": "La Banque",
+        "subtitle": "Votre bibliothèque centrale de médias.",
+        "search_placeholder": "Rechercher un média...",
+        "import": "Importer",
+        "categories": {
+            "all": "Tout",
+            "raw": "Bruts",
+            "broll": "B-roll",
+            "assets": "Assets",
+            "scripts": "Scripts",
+            "exports": "Exports"
+        }
+    },
+    "project_detail": {
+        "steps": {
+            "ideation": "Idéation & Planification",
+            "scheduling": "Ordonnancement",
+            "capture": "Capture & Upload",
+            "review": "Revue & Feedback",
+            "publication": "Publication"
+        },
+        "no_tasks": "Aucune tâche active pour cette étape."
+    },
+    "media_review": {
+        "feedback": "Feedback",
+        "comments": "{{count}} commentaires",
+        "leave_comment": "Laisser un commentaire à {{time}}..."
+    },
+    "templates": {
+        "title": "Templates",
+        "subtitle": "Accélérez votre création avec des structures pré-établies.",
+        "search_placeholder": "Rechercher des templates...",
+        "use": "Utiliser",
+        "community": "Communauté"
+    }
+}

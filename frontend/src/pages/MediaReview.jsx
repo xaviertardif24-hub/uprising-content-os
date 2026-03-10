@@ -2,17 +2,28 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ChevronLeft, Send, MessageCircle, Clock, Play, SkipBack, SkipForward, Maximize2, Settings } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { useClipflowStore } from '../store/useClipflowStore'
 
 const MediaReview = () => {
+    const { t } = useTranslation()
     const { id } = useParams()
     const navigate = useNavigate()
-    const [comment, setComment] = useState('')
+    const { comments, addComment } = useClipflowStore()
+    const [commentText, setCommentText] = useState('')
 
-    const feedback = [
-        { id: 1, user: 'Kael', time: '0:05', text: 'La transition est un peu brusque ici.', date: 'Il y a 2h' },
-        { id: 2, user: 'Xavier', time: '0:12', text: 'Excellent cadrage, gardons cette prise.', date: 'Il y a 1h' },
-        { id: 3, user: 'Kael', time: '0:45', text: 'Vérifier le volume de la musique de fond.', date: 'Il y a 10min' },
-    ]
+    const mediaComments = comments.filter(c => c.mediaId === id)
+
+    const handleAddComment = () => {
+        if (!commentText.trim()) return
+        addComment({
+            mediaId: id,
+            user: 'Kael', // Mock user
+            time: '0:12', // Mock timestamp
+            text: commentText
+        })
+        setCommentText('')
+    }
 
     return (
         <div className="flex h-full bg-[#0a0a0a] text-white">
@@ -23,7 +34,7 @@ const MediaReview = () => {
                         onClick={() => navigate(-1)}
                         className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg"
                     >
-                        <ChevronLeft className="w-4 h-4" /> Retour
+                        <ChevronLeft className="w-4 h-4" /> {t('common.back')}
                     </button>
                     <div className="text-center">
                         <h2 className="text-sm font-semibold">Intro Hook V1 - Review</h2>
@@ -71,13 +82,13 @@ const MediaReview = () => {
             <div className="w-[400px] border-l border-white/10 bg-zinc-900/50 backdrop-blur-xl flex flex-col">
                 <div className="p-6 border-b border-white/10 flex items-center justify-between">
                     <h3 className="font-semibold flex items-center gap-2">
-                        <MessageCircle className="w-4 h-4 text-primary" /> Feedback
+                        <MessageCircle className="w-4 h-4 text-primary" /> {t('media_review.feedback')}
                     </h3>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/10">3 commentaires</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/10">{t('media_review.comments', { count: mediaComments.length })}</span>
                 </div>
 
                 <div className="flex-1 overflow-auto p-6 space-y-6">
-                    {feedback.map((item) => (
+                    {mediaComments.map((item) => (
                         <div key={item.id} className="group">
                             <div className="flex items-center justify-between mb-2">
                                 <div className="flex items-center gap-2">
@@ -102,12 +113,15 @@ const MediaReview = () => {
                 <div className="p-6 border-t border-white/10">
                     <div className="relative">
                         <textarea
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            placeholder="Laisser un commentaire à 0:12..."
+                            value={commentText}
+                            onChange={(e) => setCommentText(e.target.value)}
+                            placeholder={t('media_review.leave_comment', { time: '0:12' })}
                             className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm focus:outline-none focus:border-primary/50 transition-all resize-none h-24"
                         />
-                        <button className="absolute bottom-3 right-3 p-2 bg-primary rounded-xl hover:bg-primary/90 transition-all">
+                        <button
+                            onClick={handleAddComment}
+                            className="absolute bottom-3 right-3 p-2 bg-primary rounded-xl hover:bg-primary/90 transition-all"
+                        >
                             <Send className="w-4 h-4" />
                         </button>
                     </div>

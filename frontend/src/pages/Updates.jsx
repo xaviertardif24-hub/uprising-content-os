@@ -14,6 +14,20 @@ const Updates = () => {
     const changelog = [
         {
             date: new Date().toISOString(),
+            version: "v1.8.0",
+            title: "Internationalization & Demo Mode",
+            changes: [
+                "Full Internationalization (i18n) support for English and French",
+                "New persistent 'Demo Mode' using LocalStorage (no backend required)",
+                "Added 'New Project' and 'Add Task' interactive features",
+                "Complete Clipflow linear workflow implementation",
+                "High-end Media Review area with persistent feedback",
+                "Enhanced Topbar with breadcrumbs and sharing actions"
+            ],
+            isNew: true
+        },
+        {
+            date: "2026-03-10T12:00:00Z",
             version: "v1.6.0",
             title: "Interface Royale & IA Chatbot",
             changes: [
@@ -24,7 +38,7 @@ const Updates = () => {
                 "Ajout de badges de notification ('3') dynamiques dans la navigation",
                 "Correction du bug de rotation infinie sur l'invitation des membres"
             ],
-            isNew: true
+            isNew: false
         },
         {
             date: new Date(Date.now() - 86400000).toISOString(),
@@ -62,7 +76,7 @@ const Updates = () => {
                     </p>
                 </div>
                 <div>
-                    <button 
+                    <button
                         onClick={() => window.location.reload()}
                         className="flex items-center gap-2 text-sm text-notion-text-muted hover:text-notion-text hover:bg-notion-bg-hover px-3 py-1.5 rounded-lg transition-colors border border-transparent hover:border-notion-border"
                     >

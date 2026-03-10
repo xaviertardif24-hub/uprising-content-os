@@ -1,9 +1,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { useClipflowStore } from '../store/useClipflowStore'
 import { Play, FileText, Share2, Youtube, Instagram, Twitter } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const ContentTasks = () => {
+    const { t } = useTranslation()
     const { tasks } = useClipflowStore()
     const contentTasks = tasks.filter(t => ['Writer', 'Creator'].includes(t.role))
 
@@ -19,8 +20,8 @@ const ContentTasks = () => {
     return (
         <div className="p-8 max-w-6xl mx-auto">
             <header className="mb-10">
-                <h1 className="text-3xl font-semibold tracking-tight">Création de contenu</h1>
-                <p className="text-muted-foreground mt-2">Workflow spécialisé pour vos sorties médias.</p>
+                <h1 className="text-3xl font-semibold tracking-tight">{t('content_tasks.title')}</h1>
+                <p className="text-muted-foreground mt-2">{t('content_tasks.subtitle')}</p>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -51,10 +52,10 @@ const ContentTasks = () => {
 
                         <div className="flex items-center gap-3 mt-auto">
                             <button className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-secondary/10 hover:bg-secondary/20 text-xs font-semibold transition-colors">
-                                <FileText className="w-3.5 h-3.5" /> Script
+                                <FileText className="w-3.5 h-3.5" /> {t('content_tasks.script')}
                             </button>
                             <button className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-semibold transition-colors shadow-sm">
-                                <Play className="w-3.5 h-3.5 fill-current" /> Capturer
+                                <Play className="w-3.5 h-3.5 fill-current" /> {t('content_tasks.capture')}
                             </button>
                         </div>
                     </motion.div>

@@ -8,6 +8,7 @@ import { useClipflowStore } from '../store/useClipflowStore'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../components/common/Toaster'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const RECENTLY_VISITED = [
     { title: 'Example PRD', icon: FileText, date: 'J Feb 21', color: 'text-blue-500' },
@@ -46,10 +47,15 @@ const TRENDING = [
 
 
 const Dashboard = () => {
+    const { t } = useTranslation()
     const { user } = useAuth()
     const { toast } = useToast()
     const navigate = useNavigate()
-    const userName = user?.name || 'Jane Smith' // Fallback for matching image exactly
+    const { projects, addProject } = useClipflowStore()
+    const [isAddingProject, setIsAddingProject] = useState(false)
+    const [newProjectTitle, setNewProjectTitle] = useState('')
+    const [newProjectPlatform, setNewProjectPlatform] = useState('YouTube')
+    const userName = user?.name || 'Jane Smith'
 
     return (
         <div className="w-full max-w-[900px] mx-auto animate-in fade-in duration-500 pb-12 pt-4">
@@ -57,7 +63,7 @@ const Dashboard = () => {
             {/* Header */}
             <header className="flex items-center justify-center mb-10">
                 <h1 className="text-2xl font-bold text-[#37352F] tracking-tight">
-                    🌤️ Bonjour, {userName}
+                    🌤️ {t('dashboard.greeting', { name: userName })}
                 </h1>
             </header>
 
@@ -67,7 +73,7 @@ const Dashboard = () => {
                 <section>
                     <div className="flex items-center gap-2 mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
                         <Clock size={14} />
-                        <h2>Récemment visité</h2>
+                        <h2>{t('dashboard.recently_visited')}</h2>
                     </div>
                     <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-2 px-2">
                         {RECENTLY_VISITED.map((item, idx) => (
@@ -101,17 +107,78 @@ const Dashboard = () => {
                     <div className="flex items-center justify-between mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
                         <div className="flex items-center gap-2">
                             <LayoutGrid size={14} />
-                            <h2>Projets Clipflow (Charge de travail)</h2>
+                            <h2>{t('dashboard.clipflow_workload')}</h2>
                         </div>
                         <button
-                            onClick={() => navigate('/tasks')}
-                            className="text-xs hover:bg-[rgba(55,53,47,0.08)] px-1.5 py-0.5 rounded transition-colors"
+                            onClick={() => setIsAddingProject(true)}
+                            className="text-xs font-bold text-primary hover:bg-primary/5 px-2 py-1 rounded transition-colors flex items-center gap-1"
                         >
-                            Voir tout
+                            <Plus size={12} /> {t('common.add')}
                         </button>
                     </div>
+
+                    <AnimatePresence>
+                        {isAddingProject && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="mb-6 p-4 border border-primary/20 rounded-xl bg-primary/5 space-y-4"
+                            >
+                                <div className="space-y-4">
+                                    <input
+                                        autoFocus
+                                        type="text"
+                                        placeholder="Project title"
+                                        value={newProjectTitle}
+                                        onChange={(e) => setNewProjectTitle(e.target.value)}
+                                        className="w-full bg-white border border-border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all font-medium"
+                                    />
+                                    <div className="flex gap-4">
+                                        <select
+                                            value={newProjectPlatform}
+                                            onChange={(e) => setNewProjectPlatform(e.target.value)}
+                                            className="bg-white border border-border rounded-lg p-2 text-xs font-bold outline-none"
+                                        >
+                                            <option value="YouTube">YouTube</option>
+                                            <option value="TikTok">TikTok</option>
+                                            <option value="Instagram">Instagram</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2 justify-end">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsAddingProject(false)}
+                                        className="px-4 py-2 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        {t('common.cancel')}
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            if (!newProjectTitle.trim()) return
+                                            addProject({
+                                                title: newProjectTitle,
+                                                platform: newProjectPlatform,
+                                                status: 'In Progress',
+                                                workload: 0.1,
+                                                type: 'Linear'
+                                            })
+                                            setNewProjectTitle('')
+                                            setIsAddingProject(false)
+                                            toast("Project created successfully!")
+                                        }}
+                                        className="px-4 py-2 bg-primary text-white rounded-lg text-xs font-bold hover:bg-primary/90 transition-all shadow-sm"
+                                    >
+                                        {t('common.add')}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {useClipflowStore.getState().projects.map((project) => (
+                        {projects.map((project) => (
                             <motion.div
                                 key={project.id}
                                 onClick={() => navigate(`/project/${project.id}`)}
@@ -128,7 +195,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="space-y-2">
                                     <div className="flex items-center justify-between text-xs text-[rgba(55,53,47,0.65)]">
-                                        <span>Charge de travail</span>
+                                        <span>{t('dashboard.workload')}</span>
                                         <span className="font-mono font-bold text-blue-600">{Math.round(project.workload * 100)}%</span>
                                     </div>
                                     <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
@@ -148,7 +215,7 @@ const Dashboard = () => {
                 <section>
                     <div className="flex items-center gap-2 mb-3 text-[rgba(55,53,47,0.65)] text-sm font-medium">
                         <CheckSquare size={14} />
-                        <h2>Mes tâches</h2>
+                        <h2>{t('sidebar.my_tasks')}</h2>
                     </div>
                     <div className="border border-[rgba(55,53,47,0.16)] rounded-lg overflow-hidden shadow-sm">
                         <div className="flex flex-col">

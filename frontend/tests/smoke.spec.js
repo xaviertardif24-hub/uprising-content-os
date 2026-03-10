@@ -5,7 +5,7 @@ test('has title', async ({ page }) => {
 
     // Expect a title "to contain" a substring.
     // Note: Adjust the expected title based on your actual application title
-    await expect(page).toHaveTitle(/Uprising Content OS/);
+    await expect(page).toHaveTitle(/Uprising Cofounder/);
 });
 
 test('main page loads', async ({ page }) => {

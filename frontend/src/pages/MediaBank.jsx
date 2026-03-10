@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useClipflowStore } from '../store/useClipflowStore'
 import { Search, Filter, Upload, Grid, List, Play, MoreHorizontal, Folder } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const MediaBank = () => {
+    const { t } = useTranslation()
     const { media } = useClipflowStore()
     const [viewMode, setViewMode] = useState('grid')
 
@@ -11,20 +12,20 @@ const MediaBank = () => {
         <div className="p-8 max-w-7xl mx-auto h-full flex flex-col">
             <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-semibold tracking-tight">La Banque</h1>
-                    <p className="text-muted-foreground mt-2">Votre bibliothèque centrale de médias.</p>
+                    <h1 className="text-3xl font-semibold tracking-tight">{t('media_bank.title')}</h1>
+                    <p className="text-muted-foreground mt-2">{t('media_bank.subtitle')}</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="relative group">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                         <input
                             type="text"
-                            placeholder="Rechercher un média..."
+                            placeholder={t('media_bank.search_placeholder')}
                             className="pl-10 pr-4 py-2 bg-secondary/10 border-transparent focus:border-primary/20 focus:bg-white rounded-xl text-sm transition-all outline-none w-64"
                         />
                     </div>
                     <button className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-semibold hover:bg-primary/90 transition-all shadow-sm">
-                        <Upload className="w-4 h-4" /> Importer
+                        <Upload className="w-4 h-4" /> {t('media_bank.import')}
                     </button>
                 </div>
             </header>
@@ -32,9 +33,16 @@ const MediaBank = () => {
             <div className="flex-1 overflow-auto pr-2">
                 {/* Categories / Folders */}
                 <div className="flex gap-4 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-                    {['Tout', 'Bruts', 'B-roll', 'Assets', 'Scripts', 'Exports'].map((cat) => (
-                        <button key={cat} className="whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/20 hover:bg-secondary/40 text-sm font-medium transition-all">
-                            <Folder className="w-4 h-4 text-muted-foreground" /> {cat}
+                    {[
+                        { id: 'all', label: t('media_bank.categories.all') },
+                        { id: 'raw', label: t('media_bank.categories.raw') },
+                        { id: 'broll', label: t('media_bank.categories.broll') },
+                        { id: 'assets', label: t('media_bank.categories.assets') },
+                        { id: 'scripts', label: t('media_bank.categories.scripts') },
+                        { id: 'exports', label: t('media_bank.categories.exports') }
+                    ].map((cat) => (
+                        <button key={cat.id} className="whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/20 hover:bg-secondary/40 text-sm font-medium transition-all">
+                            <Folder className="w-4 h-4 text-muted-foreground" /> {cat.label}
                         </button>
                     ))}
                 </div>

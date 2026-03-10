@@ -1,8 +1,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Layout, Copy, Plus, ChevronRight, Share2, Star } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const Templates = () => {
+    const { t } = useTranslation()
     const templates = [
         { id: 1, title: 'Workflow YouTube Long', description: 'Idéation -> Script -> Montage -> SEO', views: '2.4k', type: 'Linear' },
         { id: 2, title: 'TikTok/Reels Fast Track', description: 'Hook -> Capture -> Edit mobile -> Post', views: '5.1k', type: 'Agile' },
@@ -13,11 +15,11 @@ const Templates = () => {
         <div className="p-8 max-w-6xl mx-auto">
             <header className="mb-10 flex justify-between items-end">
                 <div>
-                    <h1 className="text-3xl font-semibold tracking-tight">Templates</h1>
-                    <p className="text-muted-foreground mt-2">Réutilisez vos structures de projets gagnantes.</p>
+                    <h1 className="text-3xl font-semibold tracking-tight">{t('templates.title')}</h1>
+                    <p className="text-muted-foreground mt-2">{t('templates.subtitle')}</p>
                 </div>
                 <button className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-semibold hover:bg-primary/90 transition-all shadow-sm">
-                    <Plus className="w-4 h-4" /> Nouveau Template
+                    <Plus className="w-4 h-4" /> {t('common.add')} Template
                 </button>
             </header>
 
@@ -57,10 +59,10 @@ const Templates = () => {
 
             <section className="mt-16">
                 <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                    <Share2 className="w-5 h-5 text-primary" /> Community Templates
+                    <Share2 className="w-5 h-5 text-primary" /> {t('templates.community')}
                 </h2>
                 <div className="p-8 rounded-3xl bg-secondary/10 border-2 border-dashed border-border/60 flex flex-col items-center text-center">
-                    <p className="text-muted-foreground max-w-sm mb-4">Découvrez les workflows partagés par les meilleurs créateurs de la communauté.</p>
+                    <p className="text-muted-foreground max-w-sm mb-4">Explorez les workflows partagés par les meilleurs créateurs de la communauté.</p>
                     <button className="text-sm font-bold text-primary hover:underline">Explorer la galerie →</button>
                 </div>
             </section>

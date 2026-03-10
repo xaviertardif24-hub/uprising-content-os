@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronRight, Search, Clock, Settings, LayoutDashboard, Library, Calendar, Lightbulb, Edit3, UserPlus, Grid, CheckSquare, Database, Video } from 'lucide-react';
+import { ChevronRight, Search, Clock, Settings, LayoutDashboard, Library, Calendar, Lightbulb, Edit3, UserPlus, Grid, CheckSquare, Database, Video, Layout, Languages } from 'lucide-react';
 import InviteModal from '../../common/InviteModal';
+import { useTranslation } from 'react-i18next';
 
 const SidebarItem = ({ icon: Icon, label, isActive, onClick, hasChildren = false, childrenItems = [], defaultExpanded = false }) => {
     const [isExpanded, setIsExpanded] = useState(defaultExpanded);
@@ -67,7 +67,13 @@ const SidebarSection = ({ title, children }) => (
 );
 
 const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
+    const { t, i18n } = useTranslation();
     const [isInviteOpen, setIsInviteOpen] = useState(false);
+
+    const toggleLanguage = () => {
+        const newLang = i18n.language === 'fr' ? 'en' : 'fr';
+        i18n.changeLanguage(newLang);
+    };
 
     return (
         <div className="flex flex-col h-full py-3">
@@ -83,12 +89,12 @@ const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
 
                 {/* Quick Actions */}
                 <SidebarSection>
-                    <SidebarItem icon={Search} label="Recherche" onClick={() => onNavigate('/search')} isActive={currentPath === '/search'} />
+                    <SidebarItem icon={Search} label={t('common.search')} onClick={() => onNavigate('/search')} isActive={currentPath === '/search'} />
                     <SidebarItem
                         icon={Clock}
                         label={
                             <div className="flex items-center justify-between w-full pr-1">
-                                <span>Nouveautés</span>
+                                <span>{t('common.updates')}</span>
                                 <span className="bg-[#EB5757] text-white text-[9px] font-bold px-1 rounded-sm h-4 min-w-[16px] flex items-center justify-center">3</span>
                             </div>
                         }
@@ -98,34 +104,34 @@ const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
                 </SidebarSection>
 
                 {/* Main Navigation */}
-                <SidebarSection title="Espaces d'équipe">
+                <SidebarSection title={t('sidebar.team_spaces')}>
                     <SidebarItem
                         icon={Grid}
-                        label="Création de contenu"
+                        label={t('sidebar.content_creation')}
                         hasChildren={true}
                         defaultExpanded={true}
                         childrenItems={[
                             {
                                 icon: Library,
-                                label: "Bibliothèque",
+                                label: t('sidebar.library'),
                                 isActive: currentPath === '/library',
                                 onClick: () => onNavigate('/library')
                             },
                             {
                                 icon: Lightbulb,
-                                label: "Boîte à idées",
+                                label: t('sidebar.ideas_bank'),
                                 isActive: currentPath === '/ideas',
                                 onClick: () => onNavigate('/ideas')
                             },
                             {
                                 icon: Edit3,
-                                label: "Éditeur de bloc",
+                                label: t('sidebar.block_editor'),
                                 isActive: currentPath === '/editor',
                                 onClick: () => onNavigate('/editor')
                             },
                             {
                                 icon: Video,
-                                label: "Workflow Créatif",
+                                label: t('sidebar.creative_workflow'),
                                 isActive: currentPath === '/content-tasks',
                                 onClick: () => onNavigate('/content-tasks')
                             }
@@ -133,37 +139,37 @@ const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
                     />
                     <SidebarItem
                         icon={LayoutDashboard}
-                        label="Organisation"
+                        label={t('sidebar.organisation')}
                         hasChildren={true}
                         defaultExpanded={true}
                         childrenItems={[
                             {
                                 icon: LayoutDashboard,
-                                label: "Tableau de bord",
+                                label: t('common.dashboard'),
                                 isActive: currentPath === '/' || currentPath === '/dashboard',
                                 onClick: () => onNavigate('/dashboard')
                             },
                             {
                                 icon: Calendar,
-                                label: "Calendrier",
+                                label: t('sidebar.calendar'),
                                 isActive: currentPath === '/calendar',
                                 onClick: () => onNavigate('/calendar')
                             },
                             {
                                 icon: CheckSquare,
-                                label: "Mes tâches",
+                                label: t('sidebar.my_tasks'),
                                 isActive: currentPath === '/tasks',
                                 onClick: () => onNavigate('/tasks')
                             },
                             {
                                 icon: Database,
-                                label: "La Banque",
+                                label: t('sidebar.the_bank'),
                                 isActive: currentPath === '/bank',
                                 onClick: () => onNavigate('/bank')
                             },
                             {
                                 icon: Layout,
-                                label: "Templates",
+                                label: t('sidebar.templates'),
                                 isActive: currentPath === '/templates',
                                 onClick: () => onNavigate('/templates')
                             }
@@ -172,17 +178,22 @@ const Sidebar = ({ currentPath, onNavigate, onOpenSettings }) => {
                 </SidebarSection>
 
                 {/* Settings at the bottom */}
-                <SidebarSection title="Système">
+                <SidebarSection title={t('sidebar.system')}>
                     <SidebarItem
-                        icon={Settings}
-                        label="Paramètres et membres"
-                        isActive={currentPath === '/settings'}
-                        onClick={onOpenSettings}
+                        icon={Languages}
+                        label={i18n.language === 'fr' ? 'English' : 'Français'}
+                        onClick={toggleLanguage}
                     />
                     <SidebarItem
-                        icon={UserPlus}
-                        label="Inviter des membres"
+                        icon={Settings}
+                        label={t('sidebar.invite_members')}
                         onClick={() => setIsInviteOpen(true)}
+                    />
+                    <SidebarItem
+                        icon={Settings}
+                        label={t('common.settings')}
+                        isActive={currentPath === '/settings'}
+                        onClick={onOpenSettings}
                     />
                 </SidebarSection>
 

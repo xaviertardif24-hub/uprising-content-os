@@ -1,22 +1,41 @@
-import React from 'react'
-import { motion } from 'framer-motion'
 import { useClipflowStore } from '../store/useClipflowStore'
 import { THEME } from '../data/ThemeConstants'
-import { CheckCircle2, Circle, Clock, MoreVertical, LayoutGrid, List } from 'lucide-react'
+import { CheckCircle2, Circle, Clock, MoreVertical, LayoutGrid, List, Plus, X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const Tasks = () => {
-    const { tasks } = useClipflowStore()
+    const { t } = useTranslation()
+    const { tasks, addTask, updateTaskStatus } = useClipflowStore()
+    const [isAdding, setIsAdding] = useState(false)
+    const [newTaskTitle, setNewTaskTitle] = useState('')
+
+    const handleAddTask = (e) => {
+        e.preventDefault()
+        if (!newTaskTitle.trim()) return
+        addTask({
+            title: newTaskTitle,
+            projectId: '1', // Default for demo
+            assignee: 'Kael',
+            status: 'Todo',
+            dueDate: new Date().toISOString().split('T')[0],
+            role: 'Creator'
+        })
+        setNewTaskTitle('')
+        setIsAdding(false)
+    }
 
     return (
         <div className="p-8 max-w-5xl mx-auto">
             <header className="mb-10 flex justify-between items-end">
                 <div>
-                    <h1 className="text-3xl font-semibold tracking-tight">Mes tâches</h1>
-                    <p className="text-muted-foreground mt-2">Gérez vos priorités quotidiennes.</p>
+                    <h1 className="text-3xl font-semibold tracking-tight">{t('tasks.title')}</h1>
+                    <p className="text-muted-foreground mt-2">{t('tasks.subtitle')}</p>
                 </div>
                 <div className="flex gap-2 bg-secondary/20 p-1 rounded-lg">
-                    <button className="p-1 px-3 rounded-md bg-white shadow-sm text-sm font-medium">Liste</button>
-                    <button className="p-1 px-3 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground">Tableau</button>
+                    <button className="p-1 px-3 rounded-md bg-white shadow-sm text-sm font-medium">{t('tasks.list')}</button>
+                    <button className="p-1 px-3 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground">{t('tasks.board')}</button>
                 </div>
             </header>
 
@@ -61,8 +80,47 @@ const Tasks = () => {
                 ))}
             </div>
 
-            <button className="mt-8 flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-                <span className="text-lg">+</span> Ajouter une tâche
+            <AnimatePresence>
+                {isAdding && (
+                    <motion.form
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        onSubmit={handleAddTask}
+                        className="mb-8 p-4 rounded-xl border border-primary/20 bg-primary/5 space-y-4"
+                    >
+                        <input
+                            autoFocus
+                            type="text"
+                            placeholder={t('tasks.add_task')}
+                            value={newTaskTitle}
+                            onChange={(e) => setNewTaskTitle(e.target.value)}
+                            className="w-full bg-white border border-border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                        />
+                        <div className="flex gap-2 justify-end">
+                            <button
+                                type="button"
+                                onClick={() => setIsAdding(false)}
+                                className="px-4 py-2 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                {t('common.cancel')}
+                            </button>
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-primary text-white rounded-lg text-xs font-bold hover:bg-primary/90 transition-all shadow-sm"
+                            >
+                                {t('common.add')}
+                            </button>
+                        </div>
+                    </motion.form>
+                )}
+            </AnimatePresence>
+
+            <button
+                onClick={() => setIsAdding(true)}
+                className="mt-8 flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+                <Plus className="w-4 h-4" /> {t('tasks.add_task')}
             </button>
         </div>
     )
