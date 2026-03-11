@@ -1,14 +1,49 @@
-import React from 'react';
-import { MoreHorizontal, Star, Share, Clock, PanelLeft } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { MoreHorizontal, Star, Share, Clock, PanelLeft, Moon, Sun } from 'lucide-react';
 import { useToast } from '../../common/Toaster';
+import { useThemeStore } from '../../../store/themeStore';
+import NotificationDropdown from '../../common/NotificationDropdown';
+import ShareDropdown from '../../common/ShareDropdown';
+import InviteModal from '../../common/InviteModal';
 
 const PageTopbar = ({ title, breadcrumbs, onToggleSidebar, isSidebarCollapsed }) => {
     const { toast } = useToast();
+    const { isDarkMode, toggleTheme } = useThemeStore();
+    const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+    const [isShareOpen, setIsShareOpen] = useState(false);
+    const [isInviteOpen, setIsInviteOpen] = useState(false);
+
+    const notificationRef = useRef(null);
+    const shareRef = useRef(null);
+
+    // Close popovers when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+                setIsNotificationsOpen(false);
+            }
+            if (shareRef.current && !shareRef.current.contains(event.target)) {
+                setIsShareOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    // Apply theme to document body
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [isDarkMode]);
+
     return (
         <div className="h-14 border-b border-notion-border flex items-center justify-between px-6 sticky top-0 bg-notion-bg z-10 transition-all">
             {/* Breadcrumbs Left */}
             <div className="flex items-center gap-1 text-[14px] text-notion-text-muted">
-                <button 
+                <button
                     onClick={onToggleSidebar}
                     className="p-1 hover:bg-notion-bg-hover rounded transition-colors mr-1"
                     title={isSidebarCollapsed ? "Ouvrir la barre latérale" : "Fermer la barre latérale"}
@@ -37,18 +72,47 @@ const PageTopbar = ({ title, breadcrumbs, onToggleSidebar, isSidebarCollapsed })
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <span 
-                        onClick={() => toast("Le partage sera bientôt disponible ! 🚀")}
-                        className="text-[13px] hover:bg-notion-bg-hover px-2 py-1 rounded cursor-pointer transition-colors text-notion-text mr-2"
+                    <div
+                        onClick={toggleTheme}
+                        title={isDarkMode ? "Passer en mode clair" : "Passer en mode sombre"}
+                        className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors"
                     >
-                        Partager
-                    </span>
-                    <div title="Partager" onClick={() => toast("Le partage sera bientôt disponible ! 🚀")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
-                        <Share size={16} strokeWidth={1.5} />
+                        {isDarkMode ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
                     </div>
-                    <div title="Mises à jour" onClick={() => toast("Les notifications seront bientôt disponibles ! 🚀")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
-                        <Clock size={16} strokeWidth={1.5} />
+
+                    <div ref={shareRef} className="relative flex items-center">
+                        <span
+                            onClick={() => setIsShareOpen(!isShareOpen)}
+                            className={`text-[13px] hover:bg-notion-bg-hover px-2 py-1 rounded cursor-pointer transition-colors text-notion-text mr-0.5 ${isShareOpen ? 'bg-notion-bg-hover' : ''}`}
+                        >
+                            Partager
+                        </span>
+                        <div
+                            title="Partager"
+                            onClick={() => setIsShareOpen(!isShareOpen)}
+                            className={`hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors ${isShareOpen ? 'bg-notion-bg-hover' : ''}`}
+                        >
+                            <Share size={16} strokeWidth={1.5} />
+                        </div>
+                        <ShareDropdown
+                            isOpen={isShareOpen}
+                            onClose={() => setIsShareOpen(false)}
+                            onOpenInvite={() => setIsInviteOpen(true)}
+                        />
                     </div>
+
+                    <div ref={notificationRef} className="relative">
+                        <div
+                            title="Mises à jour"
+                            onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+                            className={`hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors relative ${isNotificationsOpen ? 'bg-notion-bg-hover' : ''}`}
+                        >
+                            <Clock size={16} strokeWidth={1.5} />
+                            <div className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full border-2 border-white dark:border-[#191919]"></div>
+                        </div>
+                        <NotificationDropdown isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} />
+                    </div>
+
                     <div title="Favoris" onClick={() => toast("Ajouté aux favoris ! ⭐")} className="hover:bg-notion-bg-hover p-1.5 rounded cursor-pointer transition-colors">
                         <Star size={16} strokeWidth={1.5} />
                     </div>
@@ -57,6 +121,8 @@ const PageTopbar = ({ title, breadcrumbs, onToggleSidebar, isSidebarCollapsed })
                     </div>
                 </div>
             </div>
+
+            <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} />
         </div>
     );
 };
