@@ -1,28 +1,13 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import List, Optional
+from app.schemas.chat import ChatRequest, ChatResponse
+from app.services.chat_service import chat_service
 
 router = APIRouter()
 
-class ChatMessage(BaseModel):
-    role: str
-    content: str
-
-class ChatRequest(BaseModel):
-    messages: List[ChatMessage]
-    stream: Optional[bool] = False
-
-from app.services.chat_service import chat_service
-
-@router.post("")
-async def royal_chat(request: ChatRequest):
-    """
-    Royal AI Chat Endpoint.
-    Uses ChatService to generate specialized responses.
-    """
-    response_content = await chat_service.generate_response(request.messages)
-
-    return {
-        "role": "assistant",
-        "content": response_content
-    }
+@router.post("", response_model=ChatResponse)
+async def chat_endpoint(request: ChatRequest):
+    try:
+        response_text = await chat_service.generate_response(request.messages)
+        return ChatResponse(response=response_text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
