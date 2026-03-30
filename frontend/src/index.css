@@ -4,21 +4,23 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-notion-bg: #ffffff;
-  --color-notion-bg-subtle: #f7f7f7;
-  --color-notion-bg-hover: rgba(55, 53, 47, 0.06);
-  --color-notion-bg-active: rgba(55, 53, 47, 0.09);
-  --color-notion-text: #37352f;
-  --color-notion-text-muted: #b3b3b3;
-  --color-notion-text-meta: #888888;
-  --color-notion-border: rgba(15, 15, 15, 0.06);
-  --color-notion-border-strong: rgba(15, 15, 15, 0.1);
-  --color-notion-accent: #2eaadc; /* Bleu Notion */
+  --color-notion-bg: #e6f0ff; /* Very pale blue */
+  --color-notion-bg-subtle: #d0e1fe;
+  --color-notion-bg-hover: rgba(59, 130, 246, 0.1);
+  --color-notion-bg-active: rgba(59, 130, 246, 0.15);
+  --color-notion-text: #0f172a; /* Deep blue-slate for text */
+  --color-notion-text-muted: #64748b;
+  --color-notion-text-meta: #475569;
+  --color-notion-border: rgba(59, 130, 246, 0.2);
+  --color-notion-border-strong: rgba(59, 130, 246, 0.3);
+  --color-notion-accent: #2563eb; /* Strong Blue */
 }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--color-notion-bg);
+  background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 50%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.1), transparent 50%);
+  background-attachment: fixed;
   color: var(--color-notion-text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -27,14 +29,17 @@ body {
 
 .dark body,
 .dark {
-  /* Bases Notion Dark Mode (simplifié pour l'instant) */
-  --color-notion-bg: #191919;
-  --color-notion-bg-subtle: #202020;
-  --color-notion-bg-hover: rgba(255, 255, 255, 0.05);
-  --color-notion-bg-active: rgba(255, 255, 255, 0.1);
-  --color-notion-text: #ffffff;
-  --color-notion-border: rgba(255, 255, 255, 0.1);
+  /* Ocean Deep Blue for Dark Mode */
+  --color-notion-bg: #0b1120; /* Very dark blue */
+  --color-notion-bg-subtle: #1e293b;
+  --color-notion-bg-hover: rgba(96, 165, 250, 0.1);
+  --color-notion-bg-active: rgba(96, 165, 250, 0.2);
+  --color-notion-text: #f0f9ff;
+  --color-notion-border: rgba(96, 165, 250, 0.2);
+  
   background-color: var(--color-notion-bg);
+  background-image: radial-gradient(circle at top right, rgba(29, 78, 216, 0.3), transparent 60%), radial-gradient(circle at bottom left, rgba(30, 58, 138, 0.4), transparent 60%);
+  background-attachment: fixed;
   color: var(--color-notion-text);
 }
 

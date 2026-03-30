@@ -1,0 +1,33 @@
+{
+  "project_name": "Olivier - Phase 2",
+  "version": "1.0.0",
+  "mapping": {
+    "source": "Content OS",
+    "target": "Framer CMS",
+    "collections": [
+      {
+        "name": "Blog",
+        "fields": [
+          { "src": "id", "dest": "ItemID", "type": "ID" },
+          { "src": "title", "dest": "Title", "type": "String" },
+          { "src": "slug", "dest": "Slug", "type": "String", "unique": true },
+          { "src": "createdAt", "dest": "Date", "type": "Date" },
+          { "src": "image_url", "dest": "Image", "type": "Link" },
+          { "src": "summary_text", "dest": "Summary", "type": "String" },
+          { "src": "html_content", "dest": "Content", "type": "RichText" }
+        ]
+      },
+      {
+        "name": "Projects",
+        "fields": [
+          { "src": "project_name", "dest": "Title", "type": "String" },
+          { "src": "project_description", "dest": "Description", "type": "String" },
+          { "src": "cover_img", "dest": "Hero", "type": "Link" },
+          { "src": "client_name", "dest": "Client", "type": "String" }
+        ]
+      }
+    ]
+  },
+  "api_endpoint": "https://api.framer.com/v1/cms/sync",
+  "auth_header": "Bearer ${FRAMER_API_TOKEN}"
+}

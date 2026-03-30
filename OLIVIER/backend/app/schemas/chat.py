@@ -10,3 +10,11 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
+
+class IdeaScoreRequest(BaseModel):
+    title: str
+    description: Optional[str] = None
+
+class IdeaScoreResponse(BaseModel):
+    score: float
+    reasoning: str

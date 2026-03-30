@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import {
     Clock, CheckSquare, Sparkles, TrendingUp, Search,
     FileText, Users, Home, Workflow, Settings, FileIcon, UserIcon, LibraryBig, Star,
-    Database, Lightbulb, TrendingUp as TrendingIcon, Upload
+    Database, Lightbulb, TrendingUp as TrendingIcon, Upload, BookOpen
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../components/common/Toaster'
@@ -177,10 +177,10 @@ const Dashboard = () => {
                                     onClick={() => navigate('/library?score=high')}
                                 />
                                 <QuickActionButton
-                                    label="Uploader Vidéo"
-                                    icon={Upload}
-                                    color="text-green-500"
-                                    onClick={() => toast("Ouverture du sélecteur de fichiers")}
+                                    label="Voir Ressources Prof"
+                                    icon={BookOpen}
+                                    color="text-cyan-500"
+                                    onClick={() => navigate('/resources')}
                                 />
                             </div>
                         </section>

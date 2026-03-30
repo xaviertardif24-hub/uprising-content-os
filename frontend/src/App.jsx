@@ -1,95 +1,41 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
-import { AuthProvider, useAuth } from './context/AuthContext'
-import { Toaster } from './components/common/Toaster'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import Library from './pages/Library'
-import Calendar from './pages/Calendar'
-import IdeasBank from './pages/IdeasBank'
-import Settings from './pages/Settings'
-import BlockEditorDemo from './pages/BlockEditorDemo'
-import Search from './pages/Search'
-import Updates from './pages/Updates'
-import MainLayoutNotion from './components/layout/Notion/MainLayoutNotion'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { Toaster } from './components/common/Toaster';
 
-const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth()
-    return isAuthenticated ? children : <Navigate to="/login" />
-}
-
-const pageVariants = {
-    initial: { opacity: 0, y: 12 },
-    in: { opacity: 1, y: 0 },
-    out: { opacity: 0, y: -8 },
-}
-
-const pageTransition = {
-    type: 'tween',
-    ease: 'easeInOut',
-    duration: 0.25,
-}
-
-const AnimatedPage = ({ children }) => (
-    <motion.div
-        initial="initial"
-        animate="in"
-        exit="out"
-        variants={pageVariants}
-        transition={pageTransition}
-        className="h-full"
-    >
-        {children}
-    </motion.div>
-)
-
-function AppContent() {
-    const location = useLocation()
-
-    return (
-        <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
-                <Route
-                    path="/login"
-                    element={
-                        <AnimatedPage>
-                            <Login />
-                        </AnimatedPage>
-                    }
-                />
-
-                <Route
-                    path="/"
-                    element={
-                        <ProtectedRoute>
-                            <MainLayoutNotion />
-                        </ProtectedRoute>
-                    }
-                >
-                    <Route index element={<AnimatedPage><Dashboard /></AnimatedPage>} />
-                    <Route path="dashboard" element={<AnimatedPage><Dashboard /></AnimatedPage>} />
-                    <Route path="library" element={<AnimatedPage><Library /></AnimatedPage>} />
-                    <Route path="calendar" element={<AnimatedPage><Calendar /></AnimatedPage>} />
-                    <Route path="ideas" element={<AnimatedPage><IdeasBank /></AnimatedPage>} />
-                    <Route path="editor" element={<AnimatedPage><BlockEditorDemo /></AnimatedPage>} />
-                    <Route path="settings" element={<AnimatedPage><Settings /></AnimatedPage>} />
-                    <Route path="search" element={<AnimatedPage><Search /></AnimatedPage>} />
-                    <Route path="updates" element={<AnimatedPage><Updates /></AnimatedPage>} />
-                </Route>
-            </Routes>
-        </AnimatePresence>
-    )
-}
+import MainLayout from './components/layout/MainLayout';
+import Dashboard from './pages/Dashboard';
+import Library from './pages/Library';
+import Calendar from './pages/Calendar';
+import IdeasBank from './pages/IdeasBank';
+import Settings from './pages/Settings';
+import Search from './pages/Search';
+import Login from './pages/Login';
+import Resources from './pages/Resources';
 
 function App() {
-    return (
-        <AuthProvider>
-            <Router>
-                <AppContent />
-            </Router>
-            <Toaster />
-        </AuthProvider>
-    )
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Toaster />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="library" element={<Library />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="ideas" element={<IdeasBank />} />
+            <Route path="resources" element={<Resources />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="search" element={<Search />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

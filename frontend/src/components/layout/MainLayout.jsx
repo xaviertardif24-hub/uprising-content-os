@@ -13,7 +13,8 @@ import {
     ChevronRight,
     Settings as SettingsIcon,
     Moon,
-    Sun
+    Sun,
+    BookOpen
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useThemeStore } from '../../store/themeStore'
@@ -29,6 +30,7 @@ const MainLayout = () => {
         { icon: Library, label: 'Library', path: '/library' },
         { icon: Calendar, label: 'Calendar', path: '/calendar' },
         { icon: Lightbulb, label: 'Ideas Bank', path: '/ideas' },
+        { icon: BookOpen, label: 'Ressources', path: '/resources' },
         { icon: SettingsIcon, label: 'Settings', path: '/settings' },
     ]
 

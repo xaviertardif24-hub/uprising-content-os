@@ -7,7 +7,7 @@ load_dotenv()
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.version1 import chat
+from app.api.version1 import chat, ideas
 
 app = FastAPI(title="Uprising Content OS API")
 
@@ -22,6 +22,7 @@ app.add_middleware(
 
 # Register Routers
 app.include_router(chat.router, prefix="/api/v1/chat", tags=["chat"])
+app.include_router(ideas.router, prefix="/api/v1/ideas", tags=["ideas"])
 
 @app.get("/")
 async def root():
